@@ -11,7 +11,8 @@
     "update": "Actualizar",
     "remove": "Quitar",
     "grant": "Conceder",
-    "withdraw": "Retirar"
+    "withdraw": "Retirar",
+    "retry": "Reintentar"
   },
   "errors": {
     "generic": "Algo salio mal. Por favor, intentalo de nuevo.",
@@ -34,7 +35,12 @@
     "backToApp": "Volver a la App"
   },
   "accessibility": {
-    "languageChanged": "Idioma cambiado a Espanol"
+    "languageChanged": "Idioma cambiado a Espanol",
+    "closeNotification": "Cerrar notificacion",
+    "notifications": "Notificaciones"
+  },
+  "toast": {
+    "closeNotification": "Cerrar notificacion"
   },
   "states": {
     "AL": "Alabama",

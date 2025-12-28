@@ -18,6 +18,7 @@ import depthLimit from 'graphql-depth-limit';
 import { AuthModule } from './domains/auth/auth.module';
 import { UsersModule } from './domains/user/users.module';
 import { ProfileModule } from './domains/profile/profile.module';
+import { ActivityModule } from './domains/activity/activity.module';
 
 import configuration from 'src/config';
 import supabaseConfig from 'src/config/supabase.config';
@@ -86,6 +87,7 @@ import { CaslModule } from 'src/permissions/casl.module';
     UsersModule,
     AuthModule,
     ProfileModule,
+    ActivityModule,
   ],
   providers: SHARED_PROVIDERS,
 })

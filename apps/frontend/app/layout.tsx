@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ApolloProvider } from "@/lib/apollo-provider";
+import { ToastProvider } from "@/lib/toast";
 
 const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
@@ -32,7 +33,9 @@ export default function RootLayout({
       <body
         className={`${ibmPlexSans.variable} ${ibmPlexMono.variable} antialiased`}
       >
-        <ApolloProvider>{children}</ApolloProvider>
+        <ApolloProvider>
+          <ToastProvider>{children}</ToastProvider>
+        </ApolloProvider>
       </body>
     </html>
   );

@@ -11,7 +11,8 @@
     "update": "Update",
     "remove": "Remove",
     "grant": "Grant",
-    "withdraw": "Withdraw"
+    "withdraw": "Withdraw",
+    "retry": "Try Again"
   },
   "errors": {
     "generic": "Something went wrong. Please try again.",
@@ -34,7 +35,12 @@
     "backToApp": "Back to App"
   },
   "accessibility": {
-    "languageChanged": "Language changed to English"
+    "languageChanged": "Language changed to English",
+    "closeNotification": "Close notification",
+    "notifications": "Notifications"
+  },
+  "toast": {
+    "closeNotification": "Close notification"
   },
   "states": {
     "AL": "Alabama",
