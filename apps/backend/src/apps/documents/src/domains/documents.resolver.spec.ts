@@ -14,9 +14,7 @@ describe('DocumentsResolver', () => {
 
   const mockContext = {
     req: {
-      headers: {
-        user: JSON.stringify(mockUser),
-      },
+      user: mockUser,
     },
   };
 
@@ -78,7 +76,7 @@ describe('DocumentsResolver', () => {
     });
 
     it('should throw error when user not authenticated', () => {
-      const noUserContext = { req: { headers: {} } };
+      const noUserContext = { req: {} };
 
       expect(() => documentsResolver.listFiles(noUserContext)).toThrow(
         'User not authenticated',

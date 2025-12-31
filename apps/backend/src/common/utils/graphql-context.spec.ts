@@ -6,9 +6,7 @@ describe('getUserFromContext', () => {
     const mockUser = { id: 'user-123', email: 'test@example.com' };
     const context: GqlContext = {
       req: {
-        headers: {
-          user: JSON.stringify(mockUser),
-        },
+        user: mockUser,
       },
     };
 
@@ -17,23 +15,19 @@ describe('getUserFromContext', () => {
     expect(result).toEqual(mockUser);
   });
 
-  it('should throw UserInputError when user header is missing', () => {
+  it('should throw UserInputError when user is missing', () => {
     const context: GqlContext = {
-      req: {
-        headers: {},
-      },
+      req: {},
     };
 
     expect(() => getUserFromContext(context)).toThrow(UserInputError);
     expect(() => getUserFromContext(context)).toThrow('User not authenticated');
   });
 
-  it('should throw UserInputError when user header is undefined', () => {
+  it('should throw UserInputError when user is undefined', () => {
     const context: GqlContext = {
       req: {
-        headers: {
-          user: undefined,
-        },
+        user: undefined,
       },
     };
 

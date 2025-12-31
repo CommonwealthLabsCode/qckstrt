@@ -12,9 +12,7 @@ describe('KnowledgeResolver', () => {
 
   const mockContext = {
     req: {
-      headers: {
-        user: JSON.stringify(mockUser),
-      },
+      user: mockUser,
     },
   };
 
