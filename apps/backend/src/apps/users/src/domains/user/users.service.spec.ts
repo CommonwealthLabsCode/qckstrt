@@ -150,6 +150,36 @@ describe('UsersService', () => {
     }
   });
 
+  it('should update auth strategy successfully', async () => {
+    userRepo.update = jest.fn().mockResolvedValue({ affected: 1 });
+
+    const result = await usersService.updateAuthStrategy(
+      'user-id',
+      'passkey' as any,
+    );
+
+    expect(result).toBe(true);
+    expect(userRepo.update).toHaveBeenCalledWith(
+      { id: 'user-id' },
+      { authStrategy: 'passkey' },
+    );
+  });
+
+  it('should fail to update auth strategy with DB error', async () => {
+    userRepo.update = jest.fn().mockRejectedValue(
+      new QueryFailedError('Failed auth strategy update!', undefined, {
+        code: PostgresErrorCodes.UniqueViolation,
+        detail: 'Update failed',
+      } as any),
+    );
+
+    try {
+      await usersService.updateAuthStrategy('user-id', 'passkey' as any);
+    } catch (error) {
+      expect(error.message).toEqual('Update failed');
+    }
+  });
+
   it('should update a user', async () => {
     userRepo.update = jest
       .fn()
