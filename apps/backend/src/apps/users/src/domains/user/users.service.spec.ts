@@ -124,12 +124,18 @@ describe('UsersService', () => {
       await usersService.createPasswordlessUser('test@example.com');
 
     expect(result).toEqual({ id: 'new-user-id', email: 'test@example.com' });
-    expect(userRepo.create).toHaveBeenCalledWith({ email: 'test@example.com' });
+    expect(userRepo.create).toHaveBeenCalledWith({
+      email: 'test@example.com',
+      authStrategy: 'magic_link',
+    });
     expect(userRepo.save).toHaveBeenCalledTimes(1);
   });
 
   it('should fail to create a passwordless user with DB error', async () => {
-    userRepo.create = jest.fn().mockReturnValue({ email: 'test@example.com' });
+    userRepo.create = jest.fn().mockReturnValue({
+      email: 'test@example.com',
+      authStrategy: 'magic_link',
+    });
     userRepo.save = jest.fn().mockRejectedValue(
       new QueryFailedError('Failed user creation!', undefined, {
         code: PostgresErrorCodes.UniqueViolation,
@@ -141,6 +147,36 @@ describe('UsersService', () => {
       await usersService.createPasswordlessUser('test@example.com');
     } catch (error) {
       expect(error.message).toEqual('Email already exists');
+    }
+  });
+
+  it('should update auth strategy successfully', async () => {
+    userRepo.update = jest.fn().mockResolvedValue({ affected: 1 });
+
+    const result = await usersService.updateAuthStrategy(
+      'user-id',
+      'passkey' as any,
+    );
+
+    expect(result).toBe(true);
+    expect(userRepo.update).toHaveBeenCalledWith(
+      { id: 'user-id' },
+      { authStrategy: 'passkey' },
+    );
+  });
+
+  it('should fail to update auth strategy with DB error', async () => {
+    userRepo.update = jest.fn().mockRejectedValue(
+      new QueryFailedError('Failed auth strategy update!', undefined, {
+        code: PostgresErrorCodes.UniqueViolation,
+        detail: 'Update failed',
+      } as any),
+    );
+
+    try {
+      await usersService.updateAuthStrategy('user-id', 'passkey' as any);
+    } catch (error) {
+      expect(error.message).toEqual('Update failed');
     }
   });
 
