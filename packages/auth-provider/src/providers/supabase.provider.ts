@@ -69,6 +69,22 @@ export class SupabaseAuthProvider implements IAuthProvider {
     return "SupabaseAuthProvider";
   }
 
+  /**
+   * Convert a Supabase session to IAuthResult
+   */
+  private sessionToAuthResult(session: {
+    access_token: string;
+    refresh_token?: string;
+    expires_in?: number;
+  }): IAuthResult {
+    return {
+      accessToken: session.access_token,
+      idToken: session.access_token, // Supabase uses access token for both
+      refreshToken: session.refresh_token || "",
+      expiresIn: session.expires_in,
+    };
+  }
+
   async registerUser(input: IRegisterUserInput): Promise<string> {
     try {
       // Build user metadata including username and custom attributes
@@ -122,13 +138,14 @@ export class SupabaseAuthProvider implements IAuthProvider {
       }
 
       this.logger.log(`User authenticated: ${email}`);
-      return {
-        accessToken: data.session?.access_token || "",
-        // Supabase uses the access token for both purposes
-        idToken: data.session?.access_token || "",
-        refreshToken: data.session?.refresh_token || "",
-        expiresIn: data.session?.expires_in,
-      };
+      return data.session
+        ? this.sessionToAuthResult(data.session)
+        : {
+            accessToken: "",
+            idToken: "",
+            refreshToken: "",
+            expiresIn: undefined,
+          };
     } catch (error) {
       this.logger.error(
         `Error authenticating user: ${(error as Error).message}`,
@@ -471,12 +488,7 @@ export class SupabaseAuthProvider implements IAuthProvider {
       }
 
       this.logger.log(`Magic link verified for: ${email}`);
-      return {
-        accessToken: data.session.access_token,
-        idToken: data.session.access_token,
-        refreshToken: data.session.refresh_token || "",
-        expiresIn: data.session.expires_in,
-      };
+      return this.sessionToAuthResult(data.session);
     } catch (error) {
       this.logger.error(
         `Error verifying magic link: ${(error as Error).message}`,
@@ -562,12 +574,7 @@ export class SupabaseAuthProvider implements IAuthProvider {
       }
 
       this.logger.log(`Session created for verified user: ${email}`);
-      return {
-        accessToken: data.session.access_token,
-        idToken: data.session.access_token,
-        refreshToken: data.session.refresh_token || "",
-        expiresIn: data.session.expires_in,
-      };
+      return this.sessionToAuthResult(data.session);
     } catch (error) {
       this.logger.error(
         `Error creating session for user: ${(error as Error).message}`,
