@@ -36,11 +36,20 @@ interface GatewayContext {
   user?: string;
 }
 
+/**
+ * Extract authenticated user from request context for GraphQL operations.
+ *
+ * SECURITY: Only trusts req.user which is set by AuthMiddleware after JWT validation.
+ * Never trusts req.headers.user as it can be spoofed by clients.
+ *
+ * @see https://github.com/CommonwealthLabsCode/qckstrt/issues/182
+ */
 const handleAuth = ({ req }: { req: Request }) => {
-  // Extract user from header (sent by frontend or from JWT auth)
-  const user = req.headers.user as string | undefined;
-  if (user && user !== 'undefined') {
-    return { user };
+  // Only use the validated user from passport (set by AuthMiddleware after JWT validation)
+  // req.user contains the ILogin object from JwtStrategy.validate()
+  if (req.user) {
+    // Serialize user object to JSON string for propagation to subgraphs
+    return { user: JSON.stringify(req.user) };
   }
   return {};
 };
