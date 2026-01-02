@@ -110,6 +110,8 @@ const handleAuth = ({ req }: { req: Request }) => {
           cors: true,
           path: 'api',
           context: handleAuth,
+          // SECURITY: Disable introspection in production to prevent schema enumeration attacks
+          introspection: configService.get('NODE_ENV') !== 'production',
         },
         gateway: {
           buildService: ({ url }) => {
