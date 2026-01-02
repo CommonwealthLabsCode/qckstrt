@@ -29,6 +29,7 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/common/auth/jwt.strategy';
 import { AuthMiddleware } from 'src/common/middleware/auth.middleware';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
+import { AuthGuard } from 'src/common/guards/auth.guard';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { HealthModule } from './health/health.module';
 
@@ -135,6 +136,10 @@ const handleAuth = ({ req }: { req: Request }) => {
   providers: [
     { provide: APP_FILTER, useClass: HttpExceptionFilter },
     { provide: APP_GUARD, useClass: ThrottlerGuard },
+    // SECURITY: Global auth guard implements "deny by default"
+    // All GraphQL operations require authentication unless marked with @Public()
+    // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/183
+    { provide: APP_GUARD, useClass: AuthGuard },
     JwtStrategy,
   ],
 })
