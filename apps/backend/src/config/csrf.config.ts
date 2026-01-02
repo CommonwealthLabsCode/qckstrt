@@ -26,7 +26,7 @@ export default registerAs('csrf', () => ({
   /**
    * Token max age in milliseconds (default: 24 hours)
    */
-  tokenMaxAge: parseInt(
+  tokenMaxAge: Number.parseInt(
     process.env.CSRF_TOKEN_MAX_AGE || String(24 * 60 * 60 * 1000),
     10,
   ),

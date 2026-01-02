@@ -33,7 +33,7 @@ export default registerAs('cookie', () => ({
   /**
    * Access token cookie max age in milliseconds (default: 15 minutes)
    */
-  accessTokenMaxAge: parseInt(
+  accessTokenMaxAge: Number.parseInt(
     process.env.COOKIE_ACCESS_TOKEN_MAX_AGE || String(15 * 60 * 1000),
     10,
   ),
@@ -41,7 +41,7 @@ export default registerAs('cookie', () => ({
   /**
    * Refresh token cookie max age in milliseconds (default: 7 days)
    */
-  refreshTokenMaxAge: parseInt(
+  refreshTokenMaxAge: Number.parseInt(
     process.env.COOKIE_REFRESH_TOKEN_MAX_AGE || String(7 * 24 * 60 * 60 * 1000),
     10,
   ),

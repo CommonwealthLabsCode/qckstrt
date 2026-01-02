@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import crypto from 'crypto';
+import crypto from 'node:crypto';
 
 /**
  * HMAC Signing Service
