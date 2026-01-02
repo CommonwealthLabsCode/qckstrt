@@ -1,8 +1,4 @@
-import {
-  GraphQLDataSourceProcessOptions,
-  IntrospectAndCompose,
-  RemoteGraphQLDataSource,
-} from '@apollo/gateway';
+import { IntrospectAndCompose } from '@apollo/gateway';
 import { ApolloGatewayDriver, ApolloGatewayDriverConfig } from '@nestjs/apollo';
 
 import {
@@ -23,8 +19,10 @@ import storageConfig from 'src/config/storage.config';
 import authConfig from 'src/config/auth.config';
 import secretsConfig from 'src/config/secrets.config';
 import relationaldbConfig from 'src/config/relationaldb.config';
+import csrfConfig from 'src/config/csrf.config';
+import cookieConfig from 'src/config/cookie.config';
 
-import { HMACMiddleware } from 'src/common/middleware/hmac.middleware';
+import { CsrfMiddleware } from 'src/common/middleware/csrf.middleware';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/common/auth/jwt.strategy';
 import { AuthMiddleware } from 'src/common/middleware/auth.middleware';
@@ -32,10 +30,8 @@ import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { HealthModule } from './health/health.module';
-
-interface GatewayContext {
-  user?: string;
-}
+import { HmacSignerService } from 'src/common/services/hmac-signer.service';
+import { HmacRemoteGraphQLDataSource } from './hmac-data-source';
 
 /**
  * Extract authenticated user from request context for GraphQL operations.
@@ -66,6 +62,8 @@ const handleAuth = ({ req }: { req: Request }) => {
         authConfig,
         secretsConfig,
         relationaldbConfig,
+        csrfConfig,
+        cookieConfig,
       ],
       isGlobal: true,
     }),
@@ -105,7 +103,10 @@ const handleAuth = ({ req }: { req: Request }) => {
         ConfigModule,
         PassportModule.register({ defaultStrategy: 'jwt' }),
       ],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: async (
+        configService: ConfigService,
+        hmacSigner: HmacSignerService,
+      ) => ({
         server: {
           cors: true,
           path: 'api',
@@ -115,15 +116,10 @@ const handleAuth = ({ req }: { req: Request }) => {
         },
         gateway: {
           buildService: ({ url }) => {
-            return new RemoteGraphQLDataSource({
-              url,
-              willSendRequest({
-                request,
-                context,
-              }: GraphQLDataSourceProcessOptions<GatewayContext>) {
-                request.http?.headers.set('user', context?.user);
-              },
-            });
+            // Use custom data source that signs requests with HMAC
+            // SECURITY: This ensures microservices only accept requests from the gateway
+            // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/185
+            return new HmacRemoteGraphQLDataSource({ url }, hmacSigner);
           },
           supergraphSdl: new IntrospectAndCompose({
             subgraphs: JSON.parse(
@@ -132,7 +128,7 @@ const handleAuth = ({ req }: { req: Request }) => {
           }),
         },
       }),
-      inject: [ConfigService],
+      inject: [ConfigService, HmacSignerService],
     }),
   ],
   providers: [
@@ -143,12 +139,15 @@ const handleAuth = ({ req }: { req: Request }) => {
     // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/183
     { provide: APP_GUARD, useClass: AuthGuard },
     JwtStrategy,
+    // SECURITY: HMAC signer for gateway-to-microservice request authentication
+    // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/185
+    HmacSignerService,
   ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-      .apply(HMACMiddleware, AuthMiddleware)
+      .apply(CsrfMiddleware, AuthMiddleware)
       .exclude({ path: 'health', method: RequestMethod.GET })
       .forRoutes({ path: '*', method: RequestMethod.ALL });
   }
