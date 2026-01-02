@@ -147,11 +147,41 @@ All GraphQL inputs are validated using NestJS ValidationPipe with class-validato
 - Rejects malformed data before processing
 - Provides clear error messages for invalid inputs
 
+### CORS Configuration
+
+Cross-Origin Resource Sharing (CORS) is configured to prevent unauthorized cross-origin requests:
+
+**Production Mode:**
+- Origins restricted to `ALLOWED_ORIGINS` environment variable
+- Only whitelisted domains can make API requests
+- Credentials (cookies) are included in cross-origin requests
+
+**Development Mode:**
+- All origins are allowed for easier local development
+- Same security headers and method restrictions apply
+
+**Configuration:**
+
+| Setting | Value |
+|---------|-------|
+| Allowed Methods | GET, POST, OPTIONS |
+| Allowed Headers | Content-Type, Authorization, X-Requested-With, X-CSRF-Token |
+| Credentials | Enabled |
+| Preflight Cache | 24 hours |
+
+**Environment Variable:**
+```bash
+# Production example
+ALLOWED_ORIGINS=https://app.qckstrt.com,https://admin.qckstrt.com
+```
+
+See [cors.config.ts](apps/backend/src/config/cors.config.ts) for configuration.
+
 ### Code Security
 
 - Input validation on all user inputs via class-validator
 - Parameterized queries (TypeORM)
-- CORS configuration for API endpoints
+- Strict CORS configuration for API endpoints
 - Rate limiting on authentication endpoints
 
 ## Scope
