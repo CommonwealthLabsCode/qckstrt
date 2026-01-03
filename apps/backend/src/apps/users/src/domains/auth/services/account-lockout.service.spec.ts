@@ -4,7 +4,6 @@ import { AccountLockoutService } from './account-lockout.service';
 
 describe('AccountLockoutService', () => {
   let service: AccountLockoutService;
-  let configService: jest.Mocked<ConfigService>;
 
   beforeEach(async () => {
     const mockConfigService = {
@@ -25,7 +24,6 @@ describe('AccountLockoutService', () => {
     }).compile();
 
     service = module.get<AccountLockoutService>(AccountLockoutService);
-    configService = module.get(ConfigService);
   });
 
   afterEach(() => {

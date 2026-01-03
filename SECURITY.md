@@ -177,6 +177,46 @@ ALLOWED_ORIGINS=https://app.qckstrt.com,https://admin.qckstrt.com
 
 See [cors.config.ts](apps/backend/src/config/cors.config.ts) for configuration.
 
+### Content Security Policy (CSP)
+
+The frontend implements Content Security Policy headers to prevent XSS attacks by controlling which resources can be loaded:
+
+**CSP Directives:**
+
+| Directive | Policy | Purpose |
+|-----------|--------|---------|
+| default-src | 'self' | Only allow resources from same origin |
+| script-src | 'self' 'unsafe-inline' | Allow scripts from same origin |
+| style-src | 'self' 'unsafe-inline' fonts.googleapis.com | Allow styles and Google Fonts |
+| font-src | 'self' fonts.gstatic.com data: | Allow fonts from Google and embedded |
+| img-src | 'self' data: blob: https: | Allow images from HTTPS sources |
+| connect-src | 'self' [API_ORIGIN] | Restrict API connections |
+| frame-ancestors | 'none' | Prevent embedding (clickjacking) |
+| base-uri | 'self' | Prevent base tag injection |
+| form-action | 'self' | Restrict form submissions |
+| object-src | 'none' | Block plugins (Flash, etc.) |
+
+**Additional Headers:**
+
+| Header | Value | Purpose |
+|--------|-------|---------|
+| X-Content-Type-Options | nosniff | Prevent MIME sniffing |
+| X-Frame-Options | DENY | Backup clickjacking protection |
+| Referrer-Policy | strict-origin-when-cross-origin | Control referrer leakage |
+| Permissions-Policy | camera=(), microphone=() | Restrict browser features |
+| Strict-Transport-Security | max-age=31536000 (prod only) | Force HTTPS |
+
+**CSP Violation Reporting:**
+
+CSP violations can be reported to a dedicated endpoint for monitoring:
+
+```bash
+# Enable CSP reporting (optional)
+CSP_REPORT_URI=https://app.qckstrt.com/api/csp-report
+```
+
+See [security-headers.config.mjs](apps/frontend/config/security-headers.config.mjs) for configuration.
+
 ### Code Security
 
 - Input validation on all user inputs via class-validator
