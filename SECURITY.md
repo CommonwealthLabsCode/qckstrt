@@ -301,6 +301,51 @@ All security-relevant events are logged for monitoring, alerting, and forensic a
 
 See [audit-log.service.ts](apps/backend/src/common/services/audit-log.service.ts) for configuration.
 
+### PII Redaction in Logs
+
+All application logs are sanitized to prevent personally identifiable information (PII) from being exposed in log files.
+
+**Automatic PII Redaction:**
+
+| Data Type | Redaction Method | Example |
+|-----------|------------------|---------|
+| Email | Partial mask (first/last char + domain) | `j**n@example.com` |
+| Phone | Show last 4 digits | `***-***-4567` |
+| SSN | Full redaction | `[REDACTED_SSN]` |
+| Credit Card | Full redaction | `[REDACTED_CC]` |
+| IP Address | First octet only | `192.x.x.x` |
+| Passwords | Full redaction | `[REDACTED]` |
+| Tokens | Full redaction | `[REDACTED]` |
+
+**SecureLogger Usage:**
+
+Services handling sensitive data use `SecureLogger` instead of the standard NestJS Logger:
+
+```typescript
+import { SecureLogger } from 'src/common/services/secure-logger.service';
+
+@Injectable()
+export class MyService {
+  private readonly logger = new SecureLogger(MyService.name);
+
+  doSomething(email: string) {
+    // Email will be automatically masked in logs
+    this.logger.log(`Processing request for ${email}`);
+    // Output: "Processing request for j**n@example.com"
+  }
+}
+```
+
+**Logging Guidelines:**
+
+1. **Use SecureLogger** for any service that handles user data
+2. **Never log raw passwords** - they should never appear in code that logs
+3. **Avoid logging full objects** - use specific fields instead
+4. **Log at appropriate levels** - use `warn` for security events, `error` for failures
+5. **Include request IDs** - for tracing without exposing PII
+
+See [pii-masker.ts](apps/backend/src/common/utils/pii-masker.ts) and [secure-logger.service.ts](apps/backend/src/common/services/secure-logger.service.ts) for implementation.
+
 ### Code Security
 
 - Input validation on all user inputs via class-validator

@@ -1,6 +1,6 @@
 import { Args, ID, Mutation, Query, Resolver, Context } from '@nestjs/graphql';
 import { ConfigService } from '@nestjs/config';
-import { ForbiddenException, Logger, Optional } from '@nestjs/common';
+import { ForbiddenException, Optional } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
 import { randomUUID } from 'node:crypto';
 import { AuthService } from './auth.service';
@@ -31,6 +31,7 @@ import {
 import { AUTH_THROTTLE } from 'src/config/auth-throttle.config';
 import { AccountLockoutService } from './services/account-lockout.service';
 import { AuditLogService } from 'src/common/services/audit-log.service';
+import { SecureLogger } from 'src/common/services/secure-logger.service';
 import { IAuditContext } from 'src/common/interfaces/audit.interface';
 
 // Passkey DTOs
@@ -54,7 +55,9 @@ import {
 
 @Resolver(() => Boolean)
 export class AuthResolver {
-  private readonly logger = new Logger(AuthResolver.name);
+  // Use SecureLogger to automatically redact PII (emails, IPs) from log messages
+  // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/192
+  private readonly logger = new SecureLogger(AuthResolver.name);
   private readonly serviceName = 'users-service';
 
   constructor(
