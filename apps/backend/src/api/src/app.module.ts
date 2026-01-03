@@ -21,11 +21,13 @@ import secretsConfig from 'src/config/secrets.config';
 import relationaldbConfig from 'src/config/relationaldb.config';
 import csrfConfig from 'src/config/csrf.config';
 import cookieConfig from 'src/config/cookie.config';
+import websocketConfig, { IWebSocketConfig } from 'src/config/websocket.config';
 import { getGraphQLCorsConfig } from 'src/config/cors.config';
 
 import { CsrfMiddleware } from 'src/common/middleware/csrf.middleware';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from 'src/common/auth/jwt.strategy';
+import { WebSocketAuthService } from 'src/common/auth/websocket-auth.service';
 import { AuthMiddleware } from 'src/common/middleware/auth.middleware';
 import { APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from 'src/common/guards/auth.guard';
@@ -72,6 +74,7 @@ const handleAuth = ({ req, res }: { req: Request; res: Response }) => {
         relationaldbConfig,
         csrfConfig,
         cookieConfig,
+        websocketConfig,
       ],
       isGlobal: true,
     }),
@@ -114,32 +117,67 @@ const handleAuth = ({ req, res }: { req: Request; res: Response }) => {
       useFactory: async (
         configService: ConfigService,
         hmacSigner: HmacSignerService,
-      ) => ({
-        server: {
-          // SECURITY: Restrict CORS to allowed origins in production
-          // In development, allows all origins for easier testing
-          // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/189
-          cors: getGraphQLCorsConfig(configService),
-          path: 'api',
-          context: handleAuth,
-          // SECURITY: Disable introspection in production to prevent schema enumeration attacks
-          introspection: configService.get('NODE_ENV') !== 'production',
-        },
-        gateway: {
-          buildService: ({ url }) => {
-            // Use custom data source that signs requests with HMAC
-            // SECURITY: This ensures microservices only accept requests from the gateway
-            // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/185
-            return new HmacRemoteGraphQLDataSource({ url }, hmacSigner);
+        wsAuthService: WebSocketAuthService,
+      ) => {
+        const wsConfig = configService.get<IWebSocketConfig>('websocket');
+
+        return {
+          server: {
+            // SECURITY: Restrict CORS to allowed origins in production
+            // In development, allows all origins for easier testing
+            // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/189
+            cors: getGraphQLCorsConfig(configService),
+            path: 'api',
+            context: handleAuth,
+            // SECURITY: Disable introspection in production to prevent schema enumeration attacks
+            introspection: configService.get('NODE_ENV') !== 'production',
           },
-          supergraphSdl: new IntrospectAndCompose({
-            subgraphs: JSON.parse(
-              configService.get('MICROSERVICES') as string | '',
-            ),
-          }),
-        },
-      }),
-      inject: [ConfigService, HmacSignerService],
+          gateway: {
+            buildService: ({ url }) => {
+              // Use custom data source that signs requests with HMAC
+              // SECURITY: This ensures microservices only accept requests from the gateway
+              // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/185
+              return new HmacRemoteGraphQLDataSource({ url }, hmacSigner);
+            },
+            supergraphSdl: new IntrospectAndCompose({
+              subgraphs: JSON.parse(
+                configService.get('MICROSERVICES') as string | '',
+              ),
+            }),
+          },
+          // SECURITY: WebSocket subscription authentication
+          // All WebSocket connections must provide a valid JWT in connection params
+          // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/194
+          subscriptions: wsConfig?.enabled
+            ? {
+                'graphql-ws': {
+                  path: `/${wsConfig.path || 'api'}`,
+                  onConnect: async (context: {
+                    connectionParams?: Record<string, unknown>;
+                  }) => {
+                    const { connectionParams } = context;
+                    if (!connectionParams) {
+                      throw new Error('Missing connection parameters');
+                    }
+
+                    // Validate JWT and get authenticated user
+                    const user =
+                      await wsAuthService.authenticateConnection(
+                        connectionParams,
+                      );
+
+                    // Return user context for use in subscriptions
+                    return { user: JSON.stringify(user) };
+                  },
+                  onDisconnect: () => {
+                    // Optional: Log disconnection for monitoring
+                  },
+                },
+              }
+            : undefined,
+        };
+      },
+      inject: [ConfigService, HmacSignerService, WebSocketAuthService],
     }),
   ],
   providers: [
@@ -157,6 +195,9 @@ const handleAuth = ({ req, res }: { req: Request; res: Response }) => {
     // SECURITY: HMAC signer for gateway-to-microservice request authentication
     // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/185
     HmacSignerService,
+    // SECURITY: WebSocket authentication for GraphQL subscriptions
+    // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/194
+    WebSocketAuthService,
   ],
 })
 export class AppModule implements NestModule {

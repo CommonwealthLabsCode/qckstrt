@@ -66,6 +66,51 @@ We take security vulnerabilities seriously. If you discover a security issue, pl
 
 See [Authentication Security Guide](docs/guides/auth-security.md) for detailed architecture.
 
+### WebSocket Authentication
+
+GraphQL subscriptions over WebSocket connections require JWT authentication to prevent unauthorized access to real-time data.
+
+**How It Works:**
+
+1. Client connects to WebSocket endpoint with JWT in connection params
+2. Server validates JWT using Supabase Auth JWKS (same as HTTP requests)
+3. Invalid tokens result in immediate connection rejection
+4. Authenticated user is available in subscription context
+
+**Frontend Connection:**
+
+```typescript
+import { createClient } from 'graphql-ws';
+
+const wsClient = createClient({
+  url: 'wss://api.example.com/api',
+  connectionParams: {
+    authorization: `Bearer ${accessToken}`,
+  },
+});
+```
+
+**Security Features:**
+
+| Feature | Description |
+|---------|-------------|
+| JWT Validation | Same RS256 validation as HTTP requests |
+| Token Refresh | Client must reconnect with new token when expired |
+| Connection Rejection | Missing/invalid tokens rejected immediately |
+| Audit Logging | All WebSocket auth attempts are logged |
+
+**Configuration:**
+
+WebSocket subscriptions are disabled by default. Enable via environment variable:
+
+```bash
+WEBSOCKET_ENABLED=true
+WEBSOCKET_PATH=api
+WEBSOCKET_KEEP_ALIVE=30000
+```
+
+See [websocket-auth.service.ts](apps/backend/src/common/auth/websocket-auth.service.ts) for implementation.
+
 ### Data Protection
 
 - All data encrypted at rest (PostgreSQL, Supabase Storage)
