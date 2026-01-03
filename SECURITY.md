@@ -346,6 +346,47 @@ export class MyService {
 
 See [pii-masker.ts](apps/backend/src/common/utils/pii-masker.ts) and [secure-logger.service.ts](apps/backend/src/common/services/secure-logger.service.ts) for implementation.
 
+### Timing Attack Prevention
+
+All security-sensitive string comparisons use constant-time comparison functions to prevent timing attacks.
+
+**What are Timing Attacks?**
+
+Timing attacks exploit the fact that naive string comparison (`===`) returns early when a mismatch is found. By measuring response times, attackers can:
+- Guess valid HMAC signatures byte by byte
+- Determine valid CSRF tokens
+- Discover valid session tokens
+
+**Protected Comparisons:**
+
+| Location | Protected Value | Risk Level |
+|----------|-----------------|------------|
+| HMAC Middleware | HMAC signatures | Critical |
+| CSRF Middleware | CSRF tokens | Medium |
+| Passkey Service | Challenge verification | High (via @simplewebauthn) |
+
+**Implementation:**
+
+All secret comparisons use `crypto.timingSafeEqual()` via a utility wrapper:
+
+```typescript
+import { safeCompare } from 'src/common/utils/crypto.utils';
+
+// Safe: Takes constant time regardless of where strings differ
+if (safeCompare(providedToken, expectedToken)) {
+  // Valid token
+}
+
+// Unsafe: Returns early on first mismatch (vulnerable)
+// if (providedToken === expectedToken) { ... }
+```
+
+**Length Handling:**
+
+When comparing strings of different lengths, the comparison still performs constant-time work to prevent length-based timing attacks.
+
+See [crypto.utils.ts](apps/backend/src/common/utils/crypto.utils.ts) for implementation.
+
 ### Code Security
 
 - Input validation on all user inputs via class-validator
@@ -353,6 +394,7 @@ See [pii-masker.ts](apps/backend/src/common/utils/pii-masker.ts) and [secure-log
 - Strict CORS configuration for API endpoints
 - Rate limiting on authentication endpoints
 - Error sanitization prevents information disclosure
+- Constant-time comparison for all cryptographic secrets
 
 ## Scope
 
