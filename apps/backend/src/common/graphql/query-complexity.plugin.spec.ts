@@ -1,4 +1,5 @@
 import { GraphQLError } from 'graphql';
+import { GraphQLRequestContext, BaseContext } from '@apollo/server';
 import {
   createQueryComplexityValidationRule,
   createQueryComplexityLoggingPlugin,
@@ -68,7 +69,8 @@ describe('QueryComplexityPlugin', () => {
 
     it('should return request listener on requestDidStart', async () => {
       const plugin = createQueryComplexityLoggingPlugin();
-      const listener = await plugin.requestDidStart!({} as any);
+      const mockContext = {} as GraphQLRequestContext<BaseContext>;
+      const listener = await plugin.requestDidStart!(mockContext);
       expect(listener).toBeDefined();
       if (listener) {
         expect(typeof listener.willSendResponse).toBe('function');
