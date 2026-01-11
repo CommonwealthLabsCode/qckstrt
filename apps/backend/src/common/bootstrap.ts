@@ -6,6 +6,7 @@ import { Handler } from 'aws-lambda';
 
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 
 import { env } from 'process';
 
@@ -56,6 +57,16 @@ export default async function bootstrap(
   // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/196
   app.use(helmet(getHelmetOptions()));
   app.use(cookieParser());
+
+  // PERF-005: Enable response compression for bandwidth optimization
+  // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/201
+  app.use(
+    compression({
+      threshold: 1024, // Only compress responses > 1KB
+      level: 6, // Balanced compression (1-9, higher = more compression)
+    }),
+  );
+
   app.enableCors(getCorsConfig(configService));
 
   // Enable global validation for DTOs with class-validator decorators
