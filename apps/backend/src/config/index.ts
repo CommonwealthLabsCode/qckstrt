@@ -1,8 +1,6 @@
 import { ConfigService } from '@nestjs/config';
-import { getSecrets } from '@qckstrt/secrets-provider';
 import { createLogger, LogLevel } from '@qckstrt/logging-provider';
 import { DBConnection, DBType } from 'src/common/enums/db.enums';
-import { isDevelopment } from './environment.config';
 
 /**
  * Config logger for use during application initialization
@@ -69,6 +67,16 @@ export interface IAppConfig {
   ai: IAIConfig;
 }
 
+/**
+ * Application Configuration Factory
+ *
+ * Loads configuration from environment variables.
+ * With the federated secrets provider pattern, all secrets are available
+ * as environment variables regardless of the underlying provider:
+ * - Local dev: .env file
+ * - AWS: Bootstrap script or ECS secrets injection
+ * - Other platforms: Platform-native env var injection
+ */
 export default async (): Promise<Partial<IAppConfig>> => {
   const configService = new ConfigService();
 
@@ -79,70 +87,32 @@ export default async (): Promise<Partial<IAppConfig>> => {
   const port = configService.get('PORT');
   const region = configService.get('AWS_REGION');
 
-  if (
-    !project ||
-    !application ||
-    !version ||
-    !description ||
-    !port ||
-    !region
-  ) {
+  if (!project || !application || !version || !description || !port) {
     throw new Error(
-      `Missing service configuration: PROJECT=${project} APPLICATION=${application} VERSION=${version} DESCRIPTION=${description} PORT=${port} AWS_REGION=${region}`,
+      `Missing service configuration: PROJECT=${project} APPLICATION=${application} VERSION=${version} DESCRIPTION=${description} PORT=${port}`,
     );
   }
 
-  const baseConfig: Partial<IAppConfig> = {
+  // Load API keys from environment variable
+  const apiKeysJson = configService.get('API_KEYS');
+  let apiKeys = new Map<string, string>();
+
+  if (apiKeysJson) {
+    try {
+      const apiKeysObj = JSON.parse(apiKeysJson);
+      apiKeys = new Map<string, string>(Object.entries(apiKeysObj));
+    } catch {
+      configLogger.warn('Failed to parse API_KEYS environment variable');
+    }
+  }
+
+  return {
     project,
     application,
     version,
     description,
-    port,
-    region,
+    port: typeof port === 'string' ? parseInt(port, 10) : port,
+    region: region || 'us-east-1',
+    apiKeys,
   };
-
-  // In dev mode, skip Vault and use environment variables directly
-  if (isDevelopment()) {
-    // Load API keys from environment variable in dev mode
-    const apiKeysJson = configService.get('API_KEYS');
-    if (apiKeysJson) {
-      try {
-        const apiKeysObj = JSON.parse(apiKeysJson);
-        return {
-          ...baseConfig,
-          apiKeys: new Map<string, string>(Object.entries(apiKeysObj)),
-        };
-      } catch {
-        configLogger.warn('Failed to parse API_KEYS environment variable');
-      }
-    }
-    return baseConfig;
-  }
-
-  // In production, load secrets from Vault
-  const awsSecrets = configService.get('AWS_SECRETS');
-  if (awsSecrets) {
-    try {
-      const secrets = JSON.parse(await getSecrets(awsSecrets));
-
-      if (secrets) {
-        return {
-          ...baseConfig,
-          apiKeys: new Map<string, string>(
-            Object.entries(secrets.apiKeys || {}),
-          ),
-          auth: secrets.auth as IAuthConfig,
-          db: secrets.db as IDBConfig,
-          file: secrets.file as IFileConfig,
-          ai: secrets.ai as IAIConfig,
-        };
-      }
-    } catch (error) {
-      configLogger.warn(
-        `Failed to load secrets from Vault: ${(error as Error).message}`,
-      );
-    }
-  }
-
-  return baseConfig;
 };

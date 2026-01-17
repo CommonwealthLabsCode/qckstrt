@@ -2,7 +2,12 @@
  * @qckstrt/secrets-provider
  *
  * Secrets provider implementations for the QCKSTRT platform.
- * Provides pluggable secrets management with Supabase Vault.
+ * Provides pluggable secrets management with multiple backends.
+ *
+ * Providers:
+ * - EnvProvider (default): Read from process.env
+ * - AWSSecretsProvider: AWS Secrets Manager
+ * - SupabaseVaultProvider: Supabase Vault
  */
 
 // Re-export types from common
@@ -12,11 +17,22 @@ export {
   SecretsError,
 } from "@qckstrt/common";
 
+// Module
+export { SecretsModule, SECRETS_PROVIDER } from "./secrets.module.js";
+
 // Providers
+export {
+  EnvProvider,
+  getEnvSecret,
+  getEnvSecretOrThrow,
+} from "./providers/env.provider.js";
+
+export {
+  AWSSecretsProvider,
+  getAWSSecret,
+} from "./providers/aws-secrets.provider.js";
+
 export {
   SupabaseVaultProvider,
   getSecrets,
 } from "./providers/supabase-vault.provider.js";
-
-// Module
-export { SecretsModule } from "./secrets.module.js";
