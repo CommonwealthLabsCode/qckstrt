@@ -60,7 +60,9 @@ export class DbModule {
             return connectionOptions as TypeOrmModuleOptions;
           },
           // Custom DataSource factory with retry logic
-          dataSourceFactory: async (options): Promise<DataSource> => {
+          // Note: Type assertion needed due to different TypeORM resolution paths
+          // between packages (functionally identical DataSource classes)
+          dataSourceFactory: async (options) => {
             if (!options) {
               throw new DbConfigError('DataSource options not provided');
             }
@@ -68,12 +70,17 @@ export class DbModule {
             const logger = new Logger('DbConnection');
             logger.log('Initializing database connection with retry logic');
 
-            const dataSource = new DataSource(options);
+            // Use type assertions to bypass TypeORM type conflicts between packages
+            // (same version, different resolution paths due to peer dependencies)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const dataSource = new DataSource(options as any);
 
-            return connectWithRetry(dataSource, {
+            const result = connectWithRetry(dataSource, {
               config: storedRetryConfig,
               logger,
             });
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            return result as any;
           },
           inject: ['RELATIONAL_DB_PROVIDER'],
         }),
