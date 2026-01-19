@@ -1,7 +1,7 @@
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_INTERCEPTOR, Reflector } from '@nestjs/core';
 
 import { AuditLogEntity } from '../../db/entities/audit-log.entity';
 import { AuditLogService } from '../services/audit-log.service';
@@ -60,7 +60,17 @@ export class AuditModule {
     if (enableInterceptor) {
       providers.push({
         provide: APP_INTERCEPTOR,
-        useClass: GraphQLAuditInterceptor,
+        useFactory: (
+          reflector: Reflector,
+          auditLogService: AuditLogService,
+          configService: ConfigService,
+        ) =>
+          new GraphQLAuditInterceptor(
+            reflector,
+            auditLogService,
+            configService,
+          ),
+        inject: [Reflector, AuditLogService, ConfigService],
       });
     }
 

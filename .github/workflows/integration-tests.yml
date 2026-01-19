@@ -1,0 +1,106 @@
+name: Integration Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integration:
+    name: Backend Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm -r --filter './packages/*' build
+
+      - name: Start docker-compose services
+        run: |
+          docker compose up -d
+          echo "Waiting for services to be healthy..."
+
+          # Wait for PostgreSQL (up to 60 seconds)
+          for i in {1..30}; do
+            if docker compose exec -T supabase-db pg_isready -U postgres 2>/dev/null; then
+              echo "PostgreSQL is ready!"
+              break
+            fi
+            echo "Waiting for PostgreSQL... ($i/30)"
+            sleep 2
+          done
+
+          # Wait for Kong API Gateway / Supabase Auth (up to 120 seconds)
+          for i in {1..60}; do
+            if curl -sf http://localhost:8000/auth/v1/health > /dev/null 2>&1; then
+              echo "Supabase Auth is ready!"
+              break
+            fi
+            echo "Waiting for Supabase Auth... ($i/60)"
+            sleep 2
+          done
+
+          echo "All services ready!"
+          docker compose ps
+
+      - name: Start backend server
+        run: |
+          cd apps/backend
+          pnpm start:dev &
+
+          # Wait for backend to be ready (up to 60 seconds)
+          for i in {1..30}; do
+            if curl -sf http://localhost:3001/health > /dev/null 2>&1; then
+              echo "Backend is ready!"
+              break
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 2
+          done
+        env:
+          NODE_ENV: test
+          PORT: 3001
+          RELATIONAL_DB_HOST: localhost
+          RELATIONAL_DB_PORT: 5432
+          RELATIONAL_DB_USERNAME: postgres
+          RELATIONAL_DB_PASSWORD: your-super-secret-password
+          RELATIONAL_DB_DATABASE: postgres
+          SUPABASE_URL: http://localhost:8000
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+          SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+
+      - name: Run integration tests
+        run: pnpm test:integration
+
+      - name: Show docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Docker Compose Logs ==="
+          docker compose logs --tail=100
+
+      - name: Stop docker-compose services
+        if: always()
+        run: docker compose down -v

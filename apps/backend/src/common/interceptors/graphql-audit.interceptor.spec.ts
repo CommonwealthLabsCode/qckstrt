@@ -84,9 +84,10 @@ describe('GraphQLAuditInterceptor', () => {
 
     (GqlExecutionContext.create as jest.Mock).mockReturnValue(mockGqlContext);
 
-    // Return a mock ExecutionContext with getHandler method
+    // Return a mock ExecutionContext with getHandler and getType methods
     return {
       getHandler: jest.fn().mockReturnValue(() => {}),
+      getType: jest.fn().mockReturnValue('graphql'),
     } as unknown as ExecutionContext;
   };
 
