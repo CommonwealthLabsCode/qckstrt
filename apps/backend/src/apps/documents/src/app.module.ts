@@ -78,6 +78,8 @@ import { HealthModule } from 'src/common/health';
       buildSchemaOptions: {
         orphanedTypes: [User],
       },
+      // Pass request/response to GraphQL context for guards to access headers
+      context: ({ req, res }: { req: unknown; res: unknown }) => ({ req, res }),
     }),
     CaslModule.forRoot(),
     DocumentsModule,
