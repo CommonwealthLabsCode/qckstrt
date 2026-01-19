@@ -35,7 +35,9 @@ import { AllExceptionsFilter } from 'src/common/exceptions/all-exceptions.filter
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter';
 import { HealthModule } from 'src/common/health';
 import { HmacSignerService } from 'src/common/services/hmac-signer.service';
+import { GracefulShutdownService } from 'src/common/services/graceful-shutdown.service';
 import { HmacRemoteGraphQLDataSource } from './hmac-data-source';
+import { GatewayServicesModule } from './gateway-services.module';
 
 /**
  * Extract authenticated user from request context for GraphQL operations.
@@ -115,6 +117,7 @@ const handleAuth = ({ req, res }: { req: Request; res: Response }) => {
       imports: [
         ConfigModule,
         PassportModule.register({ defaultStrategy: 'jwt' }),
+        GatewayServicesModule,
       ],
       useFactory: async (
         configService: ConfigService,
@@ -200,6 +203,9 @@ const handleAuth = ({ req, res }: { req: Request; res: Response }) => {
     // SECURITY: WebSocket authentication for GraphQL subscriptions
     // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/194
     WebSocketAuthService,
+    // INFRA-003: Graceful shutdown service for Kubernetes SIGTERM handling
+    // @see https://github.com/CommonwealthLabsCode/qckstrt/issues/207
+    GracefulShutdownService,
   ],
 })
 export class AppModule implements NestModule {

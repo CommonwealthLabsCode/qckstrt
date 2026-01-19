@@ -14,6 +14,22 @@ import { AuditLogService } from 'src/common/services/audit-log.service';
 import { AuditAction } from 'src/common/enums/audit-action.enum';
 
 /**
+ * Apollo Federation and GraphQL introspection field names.
+ * These are allowed without user authentication when the request comes
+ * from a trusted source (HMAC-authenticated API Gateway).
+ *
+ * - __schema, __type: Standard GraphQL introspection
+ * - _service: Apollo Federation service discovery
+ * - _entities: Apollo Federation entity resolution
+ */
+const FEDERATION_INTROSPECTION_FIELDS = new Set([
+  '__schema',
+  '__type',
+  '_service',
+  '_entities',
+]);
+
+/**
  * Global authentication guard for GraphQL operations.
  *
  * SECURITY: Implements "deny by default" - all operations require authentication
@@ -22,6 +38,9 @@ import { AuditAction } from 'src/common/enums/audit-action.enum';
  * This guard checks request.user which is populated by the AuthMiddleware
  * after JWT validation via Passport.js. It does NOT trust headers that
  * could be spoofed by clients.
+ *
+ * Federation/introspection queries are allowed from HMAC-authenticated
+ * sources (API Gateway) to support Apollo Federation schema composition.
  *
  * @see https://github.com/CommonwealthLabsCode/qckstrt/issues/183
  */
@@ -48,6 +67,17 @@ export class AuthGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
     const info = ctx.getInfo();
+
+    // Allow federation/introspection queries from HMAC-authenticated sources
+    // These are internal queries from the API Gateway for schema composition
+    const fieldName = info?.fieldName;
+    if (fieldName && FEDERATION_INTROSPECTION_FIELDS.has(fieldName)) {
+      // Verify the request came through HMAC validation (from API Gateway)
+      const hasHmacAuth = request?.headers?.['x-hmac-auth'];
+      if (hasHmacAuth) {
+        return true;
+      }
+    }
 
     // SECURITY: Only trust request.user which is set by AuthMiddleware
     // after JWT validation via Passport.js. Never trust request.headers.user

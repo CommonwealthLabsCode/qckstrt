@@ -44,8 +44,20 @@ export class GraphQLAuditInterceptor implements NestInterceptor {
   }
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<unknown> {
+    // Only handle GraphQL requests - skip HTTP/REST endpoints
+    const contextType = context.getType<string>();
+    if (contextType !== 'graphql') {
+      return next.handle();
+    }
+
     const gqlCtx = GqlExecutionContext.create(context);
     const info: GraphQLInfo = gqlCtx.getInfo();
+
+    // Additional safety check - if no GraphQL info, skip auditing
+    if (!info?.fieldName) {
+      return next.handle();
+    }
+
     const ctx = gqlCtx.getContext();
     const args = gqlCtx.getArgs();
     const request: Request | undefined = ctx.req;

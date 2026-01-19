@@ -35,6 +35,18 @@ import { IUserPolicies } from 'src/interfaces/user.interface';
 import { IFilePolicies } from 'src/interfaces/file.interface';
 import { AuditLogService } from 'src/common/services/audit-log.service';
 
+/**
+ * Apollo Federation and GraphQL introspection field names.
+ * These are allowed without user authentication when the request comes
+ * from a trusted source (HMAC-authenticated API Gateway).
+ */
+const FEDERATION_INTROSPECTION_FIELDS = new Set([
+  '__schema',
+  '__type',
+  '_service',
+  '_entities',
+]);
+
 interface IPermissions {
   subject: string;
   policies: IPolicy[];
@@ -67,6 +79,17 @@ export class PoliciesGuard<
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const info = ctx.getInfo();
+    const request = ctx.getContext().req;
+
+    // Allow federation/introspection queries from HMAC-authenticated sources
+    // These are internal queries from the API Gateway for schema composition
+    const fieldName = info?.fieldName;
+    if (fieldName && FEDERATION_INTROSPECTION_FIELDS.has(fieldName)) {
+      const hasHmacAuth = request?.headers?.['x-hmac-auth'];
+      if (hasHmacAuth) {
+        return true;
+      }
+    }
 
     // Retrieve policies defined for the route handler and class
     const requiredPolicies =
@@ -79,7 +102,6 @@ export class PoliciesGuard<
       return true;
     }
 
-    const request = ctx.getContext().req;
     const args = ctx.getArgs();
 
     // SECURITY: Use request.user set by AuthMiddleware after JWT validation

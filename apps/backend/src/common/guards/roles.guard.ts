@@ -17,6 +17,18 @@ import { isLoggedIn } from 'src/common/auth/jwt.strategy';
 import { AuditLogService } from 'src/common/services/audit-log.service';
 import { AuditAction } from 'src/common/enums/audit-action.enum';
 
+/**
+ * Apollo Federation and GraphQL introspection field names.
+ * These are allowed without user authentication when the request comes
+ * from a trusted source (HMAC-authenticated API Gateway).
+ */
+const FEDERATION_INTROSPECTION_FIELDS = new Set([
+  '__schema',
+  '__type',
+  '_service',
+  '_entities',
+]);
+
 @Injectable()
 export class RolesGuard implements CanActivate {
   private readonly logger = new Logger(RolesGuard.name);
@@ -30,6 +42,16 @@ export class RolesGuard implements CanActivate {
     const ctx = GqlExecutionContext.create(context);
     const request = ctx.getContext().req;
     const info = ctx.getInfo();
+
+    // Allow federation/introspection queries from HMAC-authenticated sources
+    // These are internal queries from the API Gateway for schema composition
+    const fieldName = info?.fieldName;
+    if (fieldName && FEDERATION_INTROSPECTION_FIELDS.has(fieldName)) {
+      const hasHmacAuth = request?.headers?.['x-hmac-auth'];
+      if (hasHmacAuth) {
+        return true;
+      }
+    }
 
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       ctx.getHandler(),

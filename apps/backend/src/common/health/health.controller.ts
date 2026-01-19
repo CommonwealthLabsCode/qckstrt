@@ -7,12 +7,14 @@ import {
 import { DatabaseHealthIndicator } from './indicators/database.health';
 import { MemoryHealthIndicator } from './indicators/memory.health';
 import { HealthModuleOptions } from './health.module';
+import { Public } from '../decorators/public.decorator';
 
 /**
  * Health Controller
  *
  * Provides health check endpoints for Kubernetes liveness and readiness probes.
- * These endpoints are excluded from authentication middleware.
+ * These endpoints are excluded from authentication middleware and marked as public
+ * to bypass the global AuthGuard.
  *
  * Endpoints:
  * - GET /health - Full health check with all indicators
@@ -21,6 +23,7 @@ import { HealthModuleOptions } from './health.module';
  *
  * @see https://github.com/CommonwealthLabsCode/qckstrt/issues/209
  */
+@Public()
 @Controller('health')
 export class HealthController {
   private readonly startTime = Date.now();
