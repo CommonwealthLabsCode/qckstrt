@@ -92,6 +92,8 @@ import { HealthModule } from 'src/common/health';
       autoSchemaFile: { path: 'schema.gql', federation: 2 },
       plugins: [ApolloServerPluginInlineTrace()],
       validationRules: [depthLimit(10), createQueryComplexityValidationRule()],
+      // Pass request/response to GraphQL context for guards to access headers
+      context: ({ req, res }: { req: unknown; res: unknown }) => ({ req, res }),
     }),
     CaslModule.forRoot(),
     UsersModule,

@@ -256,4 +256,57 @@ describe('PoliciesGuard', () => {
       expect(result).toBe(false);
     });
   });
+
+  describe('federation/introspection queries', () => {
+    const createFederationContext = (
+      fieldName: string,
+      hasHmacAuth: boolean,
+    ) => {
+      const mockRequest = {
+        user: null,
+        headers: hasHmacAuth ? { 'x-hmac-auth': 'HMAC ...' } : {},
+      };
+      const mockGqlContext = {
+        getContext: () => ({ req: mockRequest }),
+        getHandler: () => jest.fn(),
+        getClass: () => jest.fn(),
+        getArgs: () => ({}),
+        getInfo: () => ({
+          fieldName,
+          parentType: { name: 'Query' },
+        }),
+      };
+
+      (GqlExecutionContext.create as jest.Mock).mockReturnValue(mockGqlContext);
+      (reflector.getAllAndOverride as jest.Mock).mockReturnValue([
+        { action: Action.Read, subject: 'User' },
+      ]);
+
+      return {} as ExecutionContext;
+    };
+
+    it('should allow _service federation query from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('_service', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should allow _entities federation query from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('_entities', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should allow __schema introspection from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('__schema', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should deny _service federation query without HMAC authentication', async () => {
+      const context = createFederationContext('_service', false);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(false);
+    });
+  });
 });

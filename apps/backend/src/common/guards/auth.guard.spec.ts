@@ -134,6 +134,68 @@ describe('AuthGuard', () => {
     });
   });
 
+  describe('federation/introspection queries', () => {
+    const createFederationContext = (
+      fieldName: string,
+      hasHmacAuth: boolean,
+    ) => {
+      const mockRequest = {
+        user: null,
+        headers: hasHmacAuth ? { 'x-hmac-auth': 'HMAC ...' } : {},
+      };
+      const mockGqlContext = {
+        getContext: () => ({ req: mockRequest }),
+        getInfo: () => ({
+          fieldName,
+          parentType: { name: 'Query' },
+        }),
+      };
+
+      (GqlExecutionContext.create as jest.Mock).mockReturnValue(mockGqlContext);
+
+      return {
+        getHandler: jest.fn(),
+        getClass: jest.fn(),
+      } as unknown as ExecutionContext;
+    };
+
+    it('should allow __schema introspection from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('__schema', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should allow __type introspection from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('__type', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should allow _service federation query from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('_service', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should allow _entities federation query from HMAC-authenticated gateway', async () => {
+      const context = createFederationContext('_entities', true);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(true);
+    });
+
+    it('should deny __schema introspection without HMAC authentication', async () => {
+      const context = createFederationContext('__schema', false);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(false);
+    });
+
+    it('should deny _service federation query without HMAC authentication', async () => {
+      const context = createFederationContext('_service', false);
+      const result = await guard.canActivate(context);
+      expect(result).toBe(false);
+    });
+  });
+
   describe('security: deny by default', () => {
     it('should deny access when no user is present on request', async () => {
       const context = createMockContext(null);

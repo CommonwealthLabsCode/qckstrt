@@ -1,0 +1,224 @@
+name: Integration Tests
+
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: [main, develop]
+  workflow_dispatch:
+
+concurrency:
+  group: integration-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  integration:
+    name: Backend Integration Tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@39370e3970a6d050c480ffad4ff0ed4d3fdee5af # v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm -r --filter './packages/*' build
+
+      - name: Start docker-compose services
+        run: |
+          docker compose up -d
+          echo "Waiting for services to be healthy..."
+
+          # Wait for PostgreSQL (up to 60 seconds)
+          for i in {1..30}; do
+            if docker compose exec -T supabase-db pg_isready -U postgres 2>/dev/null; then
+              echo "PostgreSQL is ready!"
+              break
+            fi
+            echo "Waiting for PostgreSQL... ($i/30)"
+            sleep 2
+          done
+
+          # Wait for Kong API Gateway / Supabase Auth (up to 120 seconds)
+          for i in {1..60}; do
+            if curl -sf http://localhost:8000/auth/v1/health > /dev/null 2>&1; then
+              echo "Supabase Auth is ready!"
+              break
+            fi
+            echo "Waiting for Supabase Auth... ($i/60)"
+            sleep 2
+          done
+
+          echo "All services ready!"
+          docker compose ps
+
+      - name: Start all backend services
+        run: |
+          cd apps/backend
+
+          echo "Starting users service on port 3001..."
+          PORT=3001 pnpm start:users > /tmp/users.log 2>&1 &
+
+          echo "Starting documents service on port 3002..."
+          PORT=3002 pnpm start:documents > /tmp/documents.log 2>&1 &
+
+          echo "Starting knowledge service on port 3003..."
+          PORT=3003 pnpm start:knowledge > /tmp/knowledge.log 2>&1 &
+
+          echo "Starting region service on port 3004..."
+          PORT=3004 pnpm start:region > /tmp/region.log 2>&1 &
+
+          # Wait for all microservices to be ready (up to 120 seconds)
+          echo "Waiting for microservices to be ready..."
+
+          services_ready=0
+          for i in {1..60}; do
+            users_ok=0
+            documents_ok=0
+            knowledge_ok=0
+            region_ok=0
+
+            if curl -sf http://localhost:3001/health > /dev/null 2>&1; then users_ok=1; fi
+            if curl -sf http://localhost:3002/health > /dev/null 2>&1; then documents_ok=1; fi
+            if curl -sf http://localhost:3003/health > /dev/null 2>&1; then knowledge_ok=1; fi
+            if curl -sf http://localhost:3004/health > /dev/null 2>&1; then region_ok=1; fi
+
+            echo "Status ($i/60): users=$users_ok documents=$documents_ok knowledge=$knowledge_ok region=$region_ok"
+
+            if [ "$users_ok" = "1" ] && [ "$documents_ok" = "1" ] && [ "$knowledge_ok" = "1" ] && [ "$region_ok" = "1" ]; then
+              echo "All microservices are ready!"
+              services_ready=1
+              break
+            fi
+
+            sleep 2
+          done
+
+          if [ "$services_ready" = "0" ]; then
+            echo "ERROR: Not all microservices started within timeout"
+            echo "=== Users service log ==="
+            cat /tmp/users.log || true
+            echo "=== Documents service log ==="
+            cat /tmp/documents.log || true
+            echo "=== Knowledge service log ==="
+            cat /tmp/knowledge.log || true
+            echo "=== Region service log ==="
+            cat /tmp/region.log || true
+            exit 1
+          fi
+
+          # Start API Gateway after microservices are ready
+          echo "Starting API Gateway on port 3000..."
+          PORT=3000 pnpm start:api > /tmp/api.log 2>&1 &
+
+          # Wait for API Gateway (up to 60 seconds)
+          for i in {1..30}; do
+            if curl -sf http://localhost:3000/health > /dev/null 2>&1; then
+              echo "API Gateway is ready!"
+              break
+            fi
+            echo "Waiting for API Gateway... ($i/30)"
+            sleep 2
+          done
+
+          if ! curl -sf http://localhost:3000/health > /dev/null 2>&1; then
+            echo "ERROR: API Gateway failed to start"
+            echo "=== API Gateway log ==="
+            cat /tmp/api.log || true
+            exit 1
+          fi
+
+          echo "All backend services are running!"
+        env:
+          NODE_ENV: test
+          # Required service configuration
+          PROJECT: qckstrt
+          VERSION: 0.0.1
+          # Per-service configuration
+          APPLICATION: qckstrt-backend
+          DESCRIPTION: QckStrt Backend Services
+          # Service ports
+          API_PORT: 3000
+          USERS_PORT: 3001
+          DOCUMENTS_PORT: 3002
+          KNOWLEDGE_PORT: 3003
+          REGION_PORT: 3004
+          # Database configuration
+          RELATIONAL_DB_PROVIDER: postgres
+          RELATIONAL_DB_HOST: localhost
+          RELATIONAL_DB_PORT: 5432
+          RELATIONAL_DB_USERNAME: postgres
+          RELATIONAL_DB_PASSWORD: your-super-secret-password
+          RELATIONAL_DB_DATABASE: postgres
+          # Supabase configuration
+          SUPABASE_URL: http://localhost:8000
+          SUPABASE_ANON_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0
+          SUPABASE_SERVICE_ROLE_KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImV4cCI6MTk4MzgxMjk5Nn0.EGIM96RAZx35lJzdJsyH-qQwv8Hdp7fsn3W0YpN81IU
+          # API Gateway microservices configuration
+          MICROSERVICES: '[{"name":"users","url":"http://localhost:3001/graphql"},{"name":"documents","url":"http://localhost:3002/graphql"},{"name":"knowledge","url":"http://localhost:3003/graphql"}]'
+          # HMAC API Keys for service-to-service auth
+          # API Gateway signs requests with GATEWAY_HMAC_SECRET, microservices validate using API_KEYS
+          GATEWAY_CLIENT_ID: api-gateway
+          GATEWAY_HMAC_SECRET: ci-gateway-hmac-secret-for-testing
+          API_KEYS: '{"api-gateway":"ci-gateway-hmac-secret-for-testing"}'
+          # Email configuration (placeholder for CI)
+          RESEND_API_KEY: re_placeholder_for_ci
+          EMAIL_FROM_ADDRESS: noreply@test.local
+          EMAIL_FROM_NAME: QckStrt CI
+          # Auth provider
+          AUTH_PROVIDER: supabase
+          STORAGE_PROVIDER: supabase
+          SECRETS_PROVIDER: supabase
+
+      - name: Run integration tests
+        run: pnpm test:integration
+
+      - name: Show backend logs on failure
+        if: failure()
+        run: |
+          echo "=== Running Processes ==="
+          ps aux | grep -i nest || true
+
+          echo ""
+          echo "=== Users Service Log ==="
+          cat /tmp/users.log 2>/dev/null | tail -100 || echo "No users log found"
+
+          echo ""
+          echo "=== Documents Service Log ==="
+          cat /tmp/documents.log 2>/dev/null | tail -100 || echo "No documents log found"
+
+          echo ""
+          echo "=== Knowledge Service Log ==="
+          cat /tmp/knowledge.log 2>/dev/null | tail -100 || echo "No knowledge log found"
+
+          echo ""
+          echo "=== Region Service Log ==="
+          cat /tmp/region.log 2>/dev/null | tail -100 || echo "No region log found"
+
+          echo ""
+          echo "=== API Gateway Log ==="
+          cat /tmp/api.log 2>/dev/null | tail -100 || echo "No API log found"
+
+      - name: Show docker logs on failure
+        if: failure()
+        run: |
+          echo "=== Docker Compose Logs ==="
+          docker compose logs --tail=100
+
+      - name: Stop docker-compose services
+        if: always()
+        run: docker compose down -v

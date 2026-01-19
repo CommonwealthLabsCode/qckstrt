@@ -8,6 +8,7 @@
     "lint": "pnpm -r lint",
     "test": "pnpm -r test",
     "test:ci": "pnpm -r test -- --coverage",
+    "test:integration": "pnpm --filter backend test:integration",
     "prepare": "husky"
   },
   "keywords": [],
