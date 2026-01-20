@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && npx prisma generate",
     "build": "pnpm build:api && pnpm build:users && pnpm build:documents && pnpm build:knowledge && pnpm build:region",
     "build:documents": "nest build --tsc documents",
     "build:knowledge": "nest build --tsc knowledge",
