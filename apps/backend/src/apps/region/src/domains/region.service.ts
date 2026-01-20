@@ -4,8 +4,6 @@ import {
   CivicDataType,
   SyncResult,
 } from '@qckstrt/region-provider';
-import { Prisma } from '@prisma/client';
-
 import { PrismaService } from 'src/db/prisma.service';
 import { RegionInfoModel, CivicDataTypeGQL } from './models/region-info.model';
 import {
@@ -286,7 +284,7 @@ export class RegionDomainService {
             district: rep.district,
             party: rep.party,
             photoUrl: rep.photoUrl,
-            contactInfo: rep.contactInfo as Prisma.InputJsonValue,
+            contactInfo: rep.contactInfo as object | undefined,
           },
           create: {
             externalId: rep.externalId,
@@ -295,7 +293,7 @@ export class RegionDomainService {
             district: rep.district,
             party: rep.party,
             photoUrl: rep.photoUrl,
-            contactInfo: rep.contactInfo as Prisma.InputJsonValue,
+            contactInfo: rep.contactInfo as object | undefined,
           },
         }),
       ),
