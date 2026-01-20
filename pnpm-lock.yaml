@@ -47,7 +47,7 @@ importers:
         version: 4.17.1
       '@langchain/community':
         specifier: ^1.1.0
-        version: 1.1.0(bmnf7ko662geybhoae7ww4ucxe)
+        version: 1.1.0(czzx4ljuxcr7cy2bwq6p4yyr3m)
       '@langchain/core':
         specifier: ^1.1.5
         version: 1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))
@@ -89,13 +89,16 @@ importers:
         version: 11.2.3(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)
       '@nestjs/terminus':
         specifier: ^11.0.0
-        version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))))(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))
+        version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))))(@prisma/client@5.22.0(prisma@5.22.0))(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))
       '@nestjs/throttler':
         specifier: ^6.5.0
         version: 6.5.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)
       '@nestjs/typeorm':
         specifier: ^11.0.0
-        version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))
+        version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))
+      '@prisma/client':
+        specifier: '5'
+        version: 5.22.0(prisma@5.22.0)
       '@qckstrt/auth-provider':
         specifier: workspace:*
         version: link:../../packages/auth-provider
@@ -206,7 +209,7 @@ importers:
         version: 14.2.0(@aws-sdk/client-sqs@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
+        version: 0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
       uuid:
         specifier: ^13.0.0
         version: 13.0.0
@@ -301,9 +304,15 @@ importers:
       jest:
         specifier: ^30.2.0
         version: 30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
+      jest-mock-extended:
+        specifier: ^4.0.0
+        version: 4.0.0(@jest/globals@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3)
       prettier:
         specifier: ^3.4.2
         version: 3.7.4
+      prisma:
+        specifier: '5'
+        version: 5.22.0
       source-map-support:
         specifier: ^0.5.21
         version: 0.5.21
@@ -473,7 +482,7 @@ importers:
         version: 22.19.3
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -482,7 +491,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -510,7 +519,7 @@ importers:
         version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3)
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
+        version: 0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -538,7 +547,7 @@ importers:
         version: 22.19.3
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -547,7 +556,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -575,7 +584,7 @@ importers:
         version: 30.0.0
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -584,7 +593,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -621,7 +630,7 @@ importers:
         version: 5.0.3
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -630,7 +639,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -652,7 +661,7 @@ importers:
         version: 30.0.0
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -661,7 +670,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -708,7 +717,7 @@ importers:
         version: 30.0.0
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -717,7 +726,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -751,7 +760,7 @@ importers:
         version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3)
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
+        version: 0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -781,11 +790,11 @@ importers:
         specifier: ^22.0.0
         version: 22.19.3
       aws-sdk-client-mock:
-        specifier: ^4.0.0
+        specifier: ^4.1.0
         version: 4.1.0
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -794,7 +803,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -822,7 +831,7 @@ importers:
         version: 22.19.3
       jest:
         specifier: ^30.0.0
-        version: 30.2.0(@types/node@22.19.3)
+        version: 30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -831,7 +840,7 @@ importers:
         version: 7.8.2
       ts-jest:
         specifier: ^29.2.5
-        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3)
+        version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3)
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -850,7 +859,7 @@ importers:
         version: 4.0.2(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(rxjs@7.8.2)
       '@nestjs/typeorm':
         specifier: ^11.0.0
-        version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))))
+        version: 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))))
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -871,7 +880,7 @@ importers:
         version: 29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3)
       typeorm:
         specifier: ^0.3.20
-        version: 0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
+        version: 0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
       typescript:
         specifier: ^5.7.2
         version: 5.9.3
@@ -3205,6 +3214,30 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  '@prisma/client@5.22.0':
+    resolution: {integrity: sha512-M0SVXfyHnQREBKxCgyo7sffrKttwE6R8PMq330MIUF0pTwjUhLbW84pFDlf06B27XyCR++VtjugEnIHdr07SVA==}
+    engines: {node: '>=16.13'}
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+
+  '@prisma/debug@5.22.0':
+    resolution: {integrity: sha512-AUt44v3YJeggO2ZU5BkXI7M4hu9BF2zzH2iF2V5pyXT/lRTyWiElZ7It+bRH1EshoMRxHgpYg4VB6rCM+mG5jQ==}
+
+  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2':
+    resolution: {integrity: sha512-2PTmxFR2yHW/eB3uqWtcgRcgAbG1rwG9ZriSvQw+nnb7c4uCr3RAcGMb6/zfE88SKlC1Nj2ziUvc96Z379mHgQ==}
+
+  '@prisma/engines@5.22.0':
+    resolution: {integrity: sha512-UNjfslWhAt06kVL3CjkuYpHAWSO6L4kDCVPegV6itt7nD1kSJavd3vhgAEhjglLJJKEdJ7oIqDJ+yHk6qO8gPA==}
+
+  '@prisma/fetch-engine@5.22.0':
+    resolution: {integrity: sha512-bkrD/Mc2fSvkQBV5EpoFcZ87AvOgDxbG99488a5cexp5Ccny+UM6MAe/UFkUC0wLYD9+9befNOqGiIJhhq+HbA==}
+
+  '@prisma/get-platform@5.22.0':
+    resolution: {integrity: sha512-pHhpQdr1UPFpt+zFfnPazhulaZYCUqeIcPpJViYoq9R+D/yw4fjE+CtnsnKzPYm0ddUbeXUzjGVGIRVgPDCk4Q==}
+
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
 
@@ -4488,6 +4521,10 @@ packages:
   aws-sdk-client-mock@4.1.0:
     resolution: {integrity: sha512-h/tOYTkXEsAcV3//6C1/7U4ifSpKyJvb6auveAepqqNJl6TdZaPFEtKjBQNf8UxQdDP850knB2i/whq4zlsxJw==}
 
+  aws-ssl-profiles@1.1.2:
+    resolution: {integrity: sha512-NZKeq9AfyQvEeNlN0zSYAaWrmBffJh3IELMZfRpJVWgrpEbtEpnjvzqBPf+mxoI287JohRDoa+/nsfqqiZmF6g==}
+    engines: {node: '>= 6.0.0'}
+
   axe-core@3.5.6:
     resolution: {integrity: sha512-LEUDjgmdJoA3LqklSTwKYqkjcZ4HKc4ddIYGSAiSkr46NTjzg2L9RNB+lekO9P7Dlpa87+hBtzc2Fzn/+GUWMQ==}
     engines: {node: '>=4'}
@@ -5168,6 +5205,10 @@ packages:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
     engines: {node: '>=0.4.0'}
 
+  denque@2.1.0:
+    resolution: {integrity: sha512-HVQE3AAb/pxF8fQAoiqpvg9i3evqug3hoiwakOyZAwJm+6vZehbkYXZ0l4JxS+I3QxM97v5aaRNhj8v5oBhekw==}
+    engines: {node: '>=0.10'}
+
   depd@2.0.0:
     resolution: {integrity: sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw==}
     engines: {node: '>= 0.8'}
@@ -5828,6 +5869,9 @@ packages:
     resolution: {integrity: sha512-zV/5HKTfCeKWnxG0Dmrw51hEWFGfcF2xiXqcA3+J90WDuP0SvoiSO5ORvcBsifmx/FoIjgQN3oNOGaQ5PhLFkg==}
     engines: {node: '>=18'}
 
+  generate-function@2.3.1:
+    resolution: {integrity: sha512-eeB5GfMNeevm/GRYq20ShmsaGcmI81kIX2K9XQx5miC8KdHaC6Jm0qQ8ZNeGOi7wYB8OsdxKs+Y2oVuTFuVwKQ==}
+
   generator-function@2.0.1:
     resolution: {integrity: sha512-SFdFmIJi+ybC0vjlHN0ZGVGHc3lgE0DxPAT0djjVg+kjOnSqclqmj0KQ7ykTOLP6YxoqOvuAODGdcHJn+43q3g==}
     engines: {node: '>= 0.4'}
@@ -6291,6 +6335,9 @@ packages:
   is-promise@4.0.0:
     resolution: {integrity: sha512-hvpoI6korhJMnej285dSg6nu1+e6uxs7zG3BYAm5byqDsgJNWwxzM6z6iZiAgQR4TJ30JmBTOwqZUw3WlyH3AQ==}
 
+  is-property@1.0.2:
+    resolution: {integrity: sha512-Ks/IoX00TtClbGQr4TWXemAnktAQvYB7HzcCxDGqEZU6oCmb2INHuOoKxbtR+HFkmYWBKv/dOZtGRiAjDhj92g==}
+
   is-regex@1.2.1:
     resolution: {integrity: sha512-MjYsKHO5O7mCsmRGxWcLWheFqN9DJ/2TmngvjKXihe6efViPqc274+Fx/4fYj/r03+ESvBdTXK0V6tA3rgez1g==}
     engines: {node: '>= 0.4'}
@@ -6549,6 +6596,13 @@ packages:
   jest-message-util@30.2.0:
     resolution: {integrity: sha512-y4DKFLZ2y6DxTWD4cDe07RglV88ZiNEdlRfGtqahfbIjfsw1nMCPx49Uev4IA/hWn3sDKyAnSPwoYSsAEdcimw==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
+
+  jest-mock-extended@4.0.0:
+    resolution: {integrity: sha512-7BZpfuvLam+/HC+NxifIi9b+5VXj/utUDMPUqrDJehGWVuXPtLS9Jqlob2mJLrI/pg2k1S8DMfKDvEB88QNjaQ==}
+    peerDependencies:
+      '@jest/globals': ^28.0.0 || ^29.0.0 || ^30.0.0
+      jest: ^24.0.0 || ^25.0.0 || ^26.0.0 || ^27.0.0 || ^28.0.0 || ^29.0.0 || ^30.0.0
+      typescript: ^3.0.0 || ^4.0.0 || ^5.0.0
 
   jest-mock@29.7.0:
     resolution: {integrity: sha512-ITOMZn+UkYS4ZFh83xYAOzWStloNzJFO2s8DWrE4lhtGD+AorgnbkiKERe4wQVBydIGPx059g6riW5Btp6Llnw==}
@@ -7010,6 +7064,9 @@ packages:
   long@4.0.0:
     resolution: {integrity: sha512-XsP+KhQif4bjX1kbuSiySJFNAehNxgLb6hPRGJ9QsUr8ajHkuXGdrHmFUTUUXhDwVX2R5bY4JNZEwbUiMhV+MA==}
 
+  long@5.3.2:
+    resolution: {integrity: sha512-mNAgZ1GmyNhD7AuqnTG3/VQ26o760+ZYBPKjPvugO8+nLbYfX6TVpJPseBvopbdY+qpZ/lKUnmEc1LeZYS3QAA==}
+
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
     hasBin: true
@@ -7034,6 +7091,10 @@ packages:
 
   lru-memoizer@2.3.0:
     resolution: {integrity: sha512-GXn7gyHAMhO13WSKrIiNfztwxodVsP8IoZ3XfrJV4yH2x0/OeTO/FIaAHTY5YekdGgW94njfuKmyyt1E0mR6Ug==}
+
+  lru.min@1.1.3:
+    resolution: {integrity: sha512-Lkk/vx6ak3rYkRR0Nhu4lFUT2VDnQSxBe8Hbl7f36358p6ow8Bnvr8lrLt98H8J1aGxfhbX4Fs5tYg2+FTwr5Q==}
+    engines: {bun: '>=1.0.0', deno: '>=1.30.0', node: '>=8.0.0'}
 
   luxon@3.5.0:
     resolution: {integrity: sha512-rh+Zjr6DNfUYR3bPwJEnuwDdqMbxZW7LOQfUN4B54+Cl+0o5zaU9RJ6bcidfDtC1cWCZXQ+nvX8bf6bAji37QQ==}
@@ -7238,6 +7299,14 @@ packages:
   mute-stream@2.0.0:
     resolution: {integrity: sha512-WWdIxpyjEn+FhQJQQv9aQAYlHoNVdzIzUySNV1gHUPDSdZJ3yZn7pAAbQcV7B56Mvu881q9FZV+0Vx2xC44VWA==}
     engines: {node: ^18.17.0 || >=20.5.0}
+
+  mysql2@3.15.3:
+    resolution: {integrity: sha512-FBrGau0IXmuqg4haEZRBfHNWB5mUARw6hNwPDXXGg0XzVJ50mr/9hb267lvpVMnhZ1FON3qNd4Xfcez1rbFwSg==}
+    engines: {node: '>= 8.0'}
+
+  named-placeholders@1.1.6:
+    resolution: {integrity: sha512-Tz09sEL2EEuv5fFowm419c1+a/jSMiBjI9gHxVLrVdbUkkNUUfjsVYs9pVZu5oCon/kmRh9TfLEObFtkVxmY0w==}
+    engines: {node: '>=8.0.0'}
 
   nanoid@3.3.11:
     resolution: {integrity: sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w==}
@@ -7788,6 +7857,11 @@ packages:
     resolution: {integrity: sha512-9uBdv/B4EefsuAL+pWqueZyZS2Ba+LxfFeQ9DN14HU4bN8bhaxKdkpjpB6fs9+pSjIBu+FXQHImEg8j/Lw0+vA==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
 
+  prisma@5.22.0:
+    resolution: {integrity: sha512-vtpjW3XuYCSnMsNVBjLMNkTj6OZbudcPPTPYHqX0CJfpcdWciI1dM8uHETwmDxxiqEwCIE6WvXucWUetJgfu/A==}
+    engines: {node: '>=16.13'}
+    hasBin: true
+
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
@@ -8116,6 +8190,9 @@ packages:
   send@1.2.0:
     resolution: {integrity: sha512-uaW0WwXKpL9blXE2o0bRhoL2EGXIrZxQ2ZQ4mgcfoBxdFmQold+qWsD2jLrfZ0trjKL6vOw0j//eAwcALFjKSw==}
     engines: {node: '>= 18'}
+
+  seq-queue@0.0.5:
+    resolution: {integrity: sha512-hr3Wtp/GZIc/6DAGPDcV4/9WoZhjrkXsi5B/07QgX8tsdc6ilr7BFM6PM6rbdAX1kFSDYeZGLipIZZKyQP0O5Q==}
 
   serialize-javascript@6.0.2:
     resolution: {integrity: sha512-Saa1xPByTTq2gdeFZYLLo+RFE35NHZkAbqZeWNd3BpzppeVisAqpDjcp8dyf6uIvEqJRd46jemmyA4iFIeVk8g==}
@@ -8602,6 +8679,14 @@ packages:
     engines: {node: '>=18.12'}
     peerDependencies:
       typescript: '>=4.8.4'
+
+  ts-essentials@10.1.1:
+    resolution: {integrity: sha512-4aTB7KLHKmUvkjNj8V+EdnmuVTiECzn3K+zIbRthumvHu+j44x3w63xpfs0JL3NGIzGXqoQ7AV591xHO+XrOTw==}
+    peerDependencies:
+      typescript: '>=4.5.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   ts-graphviz@1.8.2:
     resolution: {integrity: sha512-5YhbFoHmjxa7pgQLkB07MtGnGJ/yhvjmc9uhsnDBEICME6gkPf83SBwLDQqGDoCa3XzUMWLk1AU2Wn1u1naDtA==}
@@ -9645,12 +9730,12 @@ snapshots:
       '@smithy/util-utf8': 2.3.0
       tslib: 2.8.1
 
-  '@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/middleware-host-header': 3.936.0
       '@aws-sdk/middleware-logger': 3.936.0
       '@aws-sdk/middleware-recursion-detection': 3.948.0
@@ -9659,7 +9744,7 @@ snapshots:
       '@aws-sdk/types': 3.936.0
       '@aws-sdk/util-endpoints': 3.936.0
       '@aws-sdk/util-user-agent-browser': 3.936.0
-      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1)
+      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@smithy/config-resolver': 4.4.6
       '@smithy/core': 3.20.7
       '@smithy/fetch-http-handler': 5.3.9
@@ -9696,7 +9781,7 @@ snapshots:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/middleware-bucket-endpoint': 3.936.0
       '@aws-sdk/middleware-expect-continue': 3.936.0
       '@aws-sdk/middleware-flexible-checksums': 3.947.0
@@ -9712,7 +9797,7 @@ snapshots:
       '@aws-sdk/types': 3.936.0
       '@aws-sdk/util-endpoints': 3.936.0
       '@aws-sdk/util-user-agent-browser': 3.936.0
-      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1)
+      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@smithy/config-resolver': 4.4.6
       '@smithy/core': 3.20.7
       '@smithy/eventstream-serde-browser': 4.2.5
@@ -9800,7 +9885,7 @@ snapshots:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/middleware-host-header': 3.936.0
       '@aws-sdk/middleware-logger': 3.936.0
       '@aws-sdk/middleware-recursion-detection': 3.948.0
@@ -9810,7 +9895,7 @@ snapshots:
       '@aws-sdk/types': 3.936.0
       '@aws-sdk/util-endpoints': 3.936.0
       '@aws-sdk/util-user-agent-browser': 3.936.0
-      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1)
+      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@smithy/config-resolver': 4.4.3
       '@smithy/core': 3.18.7
       '@smithy/fetch-http-handler': 5.3.6
@@ -9841,7 +9926,7 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/client-sso@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/client-sso@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -9854,7 +9939,7 @@ snapshots:
       '@aws-sdk/types': 3.936.0
       '@aws-sdk/util-endpoints': 3.936.0
       '@aws-sdk/util-user-agent-browser': 3.936.0
-      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1)
+      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@smithy/config-resolver': 4.4.3
       '@smithy/core': 3.18.7
       '@smithy/fetch-http-handler': 5.3.6
@@ -9932,7 +10017,7 @@ snapshots:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-node': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/middleware-host-header': 3.936.0
       '@aws-sdk/middleware-logger': 3.936.0
       '@aws-sdk/middleware-recursion-detection': 3.948.0
@@ -9941,7 +10026,7 @@ snapshots:
       '@aws-sdk/types': 3.936.0
       '@aws-sdk/util-endpoints': 3.936.0
       '@aws-sdk/util-user-agent-browser': 3.936.0
-      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1)
+      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@smithy/config-resolver': 4.4.3
       '@smithy/core': 3.18.7
       '@smithy/fetch-http-handler': 5.3.6
@@ -10045,16 +10130,16 @@ snapshots:
       '@smithy/util-stream': 4.5.10
       tslib: 2.8.1
 
-  '@aws-sdk/credential-provider-ini@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/credential-provider-ini@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-sdk/core': 3.947.0
       '@aws-sdk/credential-provider-env': 3.947.0
       '@aws-sdk/credential-provider-http': 3.947.0
-      '@aws-sdk/credential-provider-login': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-login': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/credential-provider-process': 3.947.0
-      '@aws-sdk/credential-provider-sso': 3.948.0(aws-crt@1.28.1)
-      '@aws-sdk/credential-provider-web-identity': 3.948.0(aws-crt@1.28.1)
-      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-sso': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
+      '@aws-sdk/credential-provider-web-identity': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
+      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/types': 3.936.0
       '@smithy/credential-provider-imds': 4.2.5
       '@smithy/property-provider': 4.2.5
@@ -10083,10 +10168,10 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/credential-provider-login@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/credential-provider-login@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/types': 3.936.0
       '@smithy/property-provider': 4.2.5
       '@smithy/protocol-http': 5.3.5
@@ -10109,14 +10194,14 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/credential-provider-node@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/credential-provider-node@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-sdk/credential-provider-env': 3.947.0
       '@aws-sdk/credential-provider-http': 3.947.0
-      '@aws-sdk/credential-provider-ini': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-ini': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/credential-provider-process': 3.947.0
-      '@aws-sdk/credential-provider-sso': 3.948.0(aws-crt@1.28.1)
-      '@aws-sdk/credential-provider-web-identity': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/credential-provider-sso': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
+      '@aws-sdk/credential-provider-web-identity': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/types': 3.936.0
       '@smithy/credential-provider-imds': 4.2.5
       '@smithy/property-provider': 4.2.5
@@ -10161,11 +10246,11 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/credential-provider-sso@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/credential-provider-sso@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
-      '@aws-sdk/client-sso': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/client-sso': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/token-providers': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/token-providers': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/types': 3.936.0
       '@smithy/property-provider': 4.2.5
       '@smithy/shared-ini-file-loader': 4.4.0
@@ -10187,10 +10272,10 @@ snapshots:
     transitivePeerDependencies:
       - aws-crt
 
-  '@aws-sdk/credential-provider-web-identity@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/credential-provider-web-identity@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/types': 3.936.0
       '@smithy/property-provider': 4.2.5
       '@smithy/shared-ini-file-loader': 4.4.0
@@ -10350,7 +10435,7 @@ snapshots:
       '@smithy/types': 4.12.0
       tslib: 2.8.1
 
-  '@aws-sdk/nested-clients@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/nested-clients@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-crypto/sha256-browser': 5.2.0
       '@aws-crypto/sha256-js': 5.2.0
@@ -10363,7 +10448,7 @@ snapshots:
       '@aws-sdk/types': 3.936.0
       '@aws-sdk/util-endpoints': 3.936.0
       '@aws-sdk/util-user-agent-browser': 3.936.0
-      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1)
+      '@aws-sdk/util-user-agent-node': 3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@smithy/config-resolver': 4.4.3
       '@smithy/core': 3.18.7
       '@smithy/fetch-http-handler': 5.3.6
@@ -10462,10 +10547,10 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@aws-sdk/token-providers@3.948.0(aws-crt@1.28.1)':
+  '@aws-sdk/token-providers@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-sdk/core': 3.947.0
-      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/nested-clients': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       '@aws-sdk/types': 3.936.0
       '@smithy/property-provider': 4.2.5
       '@smithy/shared-ini-file-loader': 4.4.0
@@ -10535,7 +10620,7 @@ snapshots:
       bowser: 2.13.1
       tslib: 2.8.1
 
-  '@aws-sdk/util-user-agent-node@3.947.0(aws-crt@1.28.1)':
+  '@aws-sdk/util-user-agent-node@3.947.0(aws-crt@1.28.1(bufferutil@4.0.9))':
     dependencies:
       '@aws-sdk/middleware-user-agent': 3.947.0
       '@aws-sdk/types': 3.936.0
@@ -11729,7 +11814,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@langchain/classic@1.0.6(@langchain/core@1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13)))(@opentelemetry/api@1.9.0)(cheerio@1.1.2)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))(ws@8.18.3(bufferutil@4.0.9))':
+  '@langchain/classic@1.0.6(@langchain/core@1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13)))(@opentelemetry/api@1.9.0)(cheerio@1.1.2)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))(ws@8.18.3(bufferutil@4.0.9))':
     dependencies:
       '@langchain/core': 1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))
       '@langchain/openai': 1.2.0(@langchain/core@1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13)))(ws@8.18.3(bufferutil@4.0.9))
@@ -11744,7 +11829,7 @@ snapshots:
     optionalDependencies:
       cheerio: 1.1.2
       langsmith: 0.3.87(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))
-      typeorm: 0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
+      typeorm: 0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
     transitivePeerDependencies:
       - '@opentelemetry/api'
       - '@opentelemetry/exporter-trace-otlp-proto'
@@ -11752,11 +11837,11 @@ snapshots:
       - openai
       - ws
 
-  '@langchain/community@1.1.0(bmnf7ko662geybhoae7ww4ucxe)':
+  '@langchain/community@1.1.0(czzx4ljuxcr7cy2bwq6p4yyr3m)':
     dependencies:
       '@browserbasehq/stagehand': 3.0.6(@cfworker/json-schema@4.1.1)(@opentelemetry/api@1.9.0)(deepmerge@4.3.1)(dotenv@17.2.3)(encoding@0.1.13)(zod@4.1.13)
       '@ibm-cloud/watsonx-ai': 1.7.5
-      '@langchain/classic': 1.0.6(@langchain/core@1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13)))(@opentelemetry/api@1.9.0)(cheerio@1.1.2)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))(ws@8.18.3(bufferutil@4.0.9))
+      '@langchain/classic': 1.0.6(@langchain/core@1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13)))(@opentelemetry/api@1.9.0)(cheerio@1.1.2)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))(ws@8.18.3(bufferutil@4.0.9))
       '@langchain/core': 1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13))
       '@langchain/openai': 1.2.0(@langchain/core@1.1.5(@opentelemetry/api@1.9.0)(openai@6.10.0(ws@8.18.3(bufferutil@4.0.9))(zod@4.1.13)))(ws@8.18.3(bufferutil@4.0.9))
       binary-extensions: 2.3.0
@@ -11785,9 +11870,10 @@ snapshots:
       jsdom: 27.3.0(bufferutil@4.0.9)(postcss@8.5.6)
       jsonwebtoken: 9.0.3
       lodash: 4.17.21
+      mysql2: 3.15.3
       pg: 8.16.3
       playwright: 1.57.0
-      typeorm: 0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
+      typeorm: 0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
       ws: 8.18.3(bufferutil@4.0.9)
     transitivePeerDependencies:
       - '@opentelemetry/api'
@@ -12101,7 +12187,7 @@ snapshots:
       class-transformer: 0.5.1
       class-validator: 0.14.3
 
-  '@nestjs/terminus@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))))(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))':
+  '@nestjs/terminus@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))))(@prisma/client@5.22.0(prisma@5.22.0))(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))':
     dependencies:
       '@nestjs/common': 11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
@@ -12110,8 +12196,9 @@ snapshots:
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
     optionalDependencies:
-      '@nestjs/typeorm': 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))
-      typeorm: 0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
+      '@nestjs/typeorm': 11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))
+      '@prisma/client': 5.22.0(prisma@5.22.0)
+      typeorm: 0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
 
   '@nestjs/testing@11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(@nestjs/platform-express@11.1.9)':
     dependencies:
@@ -12127,21 +12214,21 @@ snapshots:
       '@nestjs/core': 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       reflect-metadata: 0.2.2
 
-  '@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))))':
+  '@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))))':
     dependencies:
       '@nestjs/common': 11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
-      typeorm: 0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
+      typeorm: 0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)))
 
-  '@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))':
+  '@nestjs/typeorm@11.0.0(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)(typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))))':
     dependencies:
       '@nestjs/common': 11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.9(@nestjs/common@11.1.9(class-transformer@0.5.1)(class-validator@0.14.3)(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/platform-express@11.1.9)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       reflect-metadata: 0.2.2
       rxjs: 7.8.2
-      typeorm: 0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
+      typeorm: 0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))))
 
   '@next/env@16.0.10': {}
 
@@ -12309,6 +12396,31 @@ snapshots:
   '@playwright/test@1.57.0':
     dependencies:
       playwright: 1.57.0
+
+  '@prisma/client@5.22.0(prisma@5.22.0)':
+    optionalDependencies:
+      prisma: 5.22.0
+
+  '@prisma/debug@5.22.0': {}
+
+  '@prisma/engines-version@5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2': {}
+
+  '@prisma/engines@5.22.0':
+    dependencies:
+      '@prisma/debug': 5.22.0
+      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
+      '@prisma/fetch-engine': 5.22.0
+      '@prisma/get-platform': 5.22.0
+
+  '@prisma/fetch-engine@5.22.0':
+    dependencies:
+      '@prisma/debug': 5.22.0
+      '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
+      '@prisma/get-platform': 5.22.0
+
+  '@prisma/get-platform@5.22.0':
+    dependencies:
+      '@prisma/debug': 5.22.0
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -13948,6 +14060,9 @@ snapshots:
       sinon: 18.0.1
       tslib: 2.8.1
 
+  aws-ssl-profiles@1.1.2:
+    optional: true
+
   axe-core@3.5.6: {}
 
   axe-core@4.10.2: {}
@@ -14704,6 +14819,9 @@ snapshots:
 
   delayed-stream@1.0.0: {}
 
+  denque@2.1.0:
+    optional: true
+
   depd@2.0.0: {}
 
   dequal@2.0.3: {}
@@ -14976,8 +15094,8 @@ snapshots:
       '@next/eslint-plugin-next': 16.0.10
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
-      eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-react: 7.37.5(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-react-hooks: 7.0.1(eslint@9.39.2(jiti@2.6.1))
@@ -15003,7 +15121,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@nolyfill/is-core-module': 1.0.39
       debug: 4.4.3
@@ -15014,21 +15132,21 @@ snapshots:
       tinyglobby: 0.2.15
       unrs-resolver: 1.11.1
     optionalDependencies:
-      eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-plugin-import: 2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-module-utils@2.12.1(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-import-resolver-typescript: 3.10.1(eslint-plugin-import@2.32.0)(eslint@9.39.2(jiti@2.6.1))
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.32.0(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)):
+  eslint-plugin-import@2.32.0(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@rtsao/scc': 1.1.0
       array-includes: 3.1.9
@@ -15039,7 +15157,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.39.2(jiti@2.6.1)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1(eslint-plugin-import@2.32.0(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1)))(eslint@9.39.2(jiti@2.6.1))
+      eslint-module-utils: 2.12.1(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.10.1)(eslint@9.39.2(jiti@2.6.1))
       hasown: 2.0.2
       is-core-module: 2.16.1
       is-glob: 4.0.3
@@ -15596,6 +15714,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  generate-function@2.3.1:
+    dependencies:
+      is-property: 1.0.2
+    optional: true
+
   generator-function@2.0.1: {}
 
   gensync@1.0.0-beta.2: {}
@@ -15920,7 +16043,7 @@ snapshots:
       isstream: 0.1.2
       jsonwebtoken: 9.0.3
       mime-types: 2.1.35
-      retry-axios: 2.6.0(axios@1.13.2(debug@4.4.3))
+      retry-axios: 2.6.0(axios@1.13.2)
       tough-cookie: 4.1.4
     transitivePeerDependencies:
       - supports-color
@@ -16076,6 +16199,9 @@ snapshots:
   is-potential-custom-element-name@1.0.1: {}
 
   is-promise@4.0.0: {}
+
+  is-property@1.0.2:
+    optional: true
 
   is-regex@1.2.1:
     dependencies:
@@ -16296,25 +16422,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
-      - supports-color
-      - ts-node
-
-  jest-cli@30.2.0(@types/node@22.19.3):
-    dependencies:
-      '@jest/core': 30.2.0(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
-      '@jest/test-result': 30.2.0
-      '@jest/types': 30.2.0
-      chalk: 4.1.2
-      exit-x: 0.2.2
-      import-local: 3.2.0
-      jest-config: 30.2.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))
-      jest-util: 30.2.0
-      jest-validate: 30.2.0
-      yargs: 17.7.2
-    transitivePeerDependencies:
-      - '@types/node'
-      - babel-plugin-macros
-      - esbuild-register
       - supports-color
       - ts-node
 
@@ -16674,6 +16781,13 @@ snapshots:
       slash: 3.0.0
       stack-utils: 2.0.6
 
+  jest-mock-extended@4.0.0(@jest/globals@30.2.0)(jest@30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3)))(typescript@5.9.3):
+    dependencies:
+      '@jest/globals': 30.2.0
+      jest: 30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
+      ts-essentials: 10.1.1(typescript@5.9.3)
+      typescript: 5.9.3
+
   jest-mock@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
@@ -16981,19 +17095,6 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
-      - supports-color
-      - ts-node
-
-  jest@30.2.0(@types/node@22.19.3):
-    dependencies:
-      '@jest/core': 30.2.0(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
-      '@jest/types': 30.2.0
-      import-local: 3.2.0
-      jest-cli: 30.2.0(@types/node@22.19.3)
-    transitivePeerDependencies:
-      - '@types/node'
-      - babel-plugin-macros
-      - esbuild-register
       - supports-color
       - ts-node
 
@@ -17381,6 +17482,9 @@ snapshots:
 
   long@4.0.0: {}
 
+  long@5.3.2:
+    optional: true
+
   loose-envify@1.4.0:
     dependencies:
       js-tokens: 4.0.0
@@ -17403,6 +17507,9 @@ snapshots:
     dependencies:
       lodash.clonedeep: 4.5.0
       lru-cache: 6.0.0
+
+  lru.min@1.1.3:
+    optional: true
 
   luxon@3.5.0: {}
 
@@ -17614,6 +17721,24 @@ snapshots:
   mustache@4.2.0: {}
 
   mute-stream@2.0.0: {}
+
+  mysql2@3.15.3:
+    dependencies:
+      aws-ssl-profiles: 1.1.2
+      denque: 2.1.0
+      generate-function: 2.3.1
+      iconv-lite: 0.7.1
+      long: 5.3.2
+      lru.min: 1.1.3
+      named-placeholders: 1.1.6
+      seq-queue: 0.0.5
+      sqlstring: 2.3.3
+    optional: true
+
+  named-placeholders@1.1.6:
+    dependencies:
+      lru.min: 1.1.3
+    optional: true
 
   nanoid@3.3.11: {}
 
@@ -18215,6 +18340,12 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.3.1
 
+  prisma@5.22.0:
+    dependencies:
+      '@prisma/engines': 5.22.0
+    optionalDependencies:
+      fsevents: 2.3.3
+
   process-nextick-args@2.0.1:
     optional: true
 
@@ -18483,7 +18614,7 @@ snapshots:
       onetime: 7.0.0
       signal-exit: 4.1.0
 
-  retry-axios@2.6.0(axios@1.13.2(debug@4.4.3)):
+  retry-axios@2.6.0(axios@1.13.2):
     dependencies:
       axios: 1.13.2(debug@4.4.3)
 
@@ -18600,6 +18731,9 @@ snapshots:
       statuses: 2.0.2
     transitivePeerDependencies:
       - supports-color
+
+  seq-queue@0.0.5:
+    optional: true
 
   serialize-javascript@6.0.2:
     dependencies:
@@ -19214,6 +19348,10 @@ snapshots:
     dependencies:
       typescript: 5.9.3
 
+  ts-essentials@10.1.1(typescript@5.9.3):
+    optionalDependencies:
+      typescript: 5.9.3
+
   ts-graphviz@1.8.2: {}
 
   ts-jest@29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@29.7.0(@types/node@22.19.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3)))(typescript@5.9.3):
@@ -19262,26 +19400,6 @@ snapshots:
       fast-json-stable-stringify: 2.1.0
       handlebars: 4.7.8
       jest: 30.2.0(@types/node@25.0.1)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))
-      json5: 2.2.3
-      lodash.memoize: 4.1.2
-      make-error: 1.3.6
-      semver: 7.7.3
-      type-fest: 4.41.0
-      typescript: 5.9.3
-      yargs-parser: 21.1.1
-    optionalDependencies:
-      '@babel/core': 7.28.5
-      '@jest/transform': 30.2.0
-      '@jest/types': 30.2.0
-      babel-jest: 30.2.0(@babel/core@7.28.5)
-      jest-util: 30.2.0
-
-  ts-jest@29.4.6(@babel/core@7.28.5)(@jest/transform@30.2.0)(@jest/types@30.2.0)(babel-jest@30.2.0(@babel/core@7.28.5))(jest-util@30.2.0)(jest@30.2.0)(typescript@5.9.3):
-    dependencies:
-      bs-logger: 0.2.6
-      fast-json-stable-stringify: 2.1.0
-      handlebars: 4.7.8
-      jest: 30.2.0(@types/node@22.19.3)
       json5: 2.2.3
       lodash.memoize: 4.1.2
       make-error: 1.3.6
@@ -19435,13 +19553,13 @@ snapshots:
 
   typedarray@0.0.6: {}
 
-  typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1)):
+  typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))):
     dependencies:
-      '@aws-sdk/client-rds-data': 3.948.0(aws-crt@1.28.1)
+      '@aws-sdk/client-rds-data': 3.948.0(aws-crt@1.28.1(bufferutil@4.0.9))
       sqlstring: 2.3.3
     optional: true
 
-  typeorm@0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))):
+  typeorm@0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@22.19.3)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 4.2.0
@@ -19460,14 +19578,15 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       better-sqlite3: 12.5.0
+      mysql2: 3.15.3
       pg: 8.16.3
       ts-node: 10.9.2(@types/node@22.19.3)(typescript@5.9.3)
-      typeorm-aurora-data-api-driver: 3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))
+      typeorm-aurora-data-api-driver: 3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
 
-  typeorm@0.3.28(better-sqlite3@12.5.0)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))):
+  typeorm@0.3.28(better-sqlite3@12.5.0)(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 4.2.0
@@ -19486,14 +19605,15 @@ snapshots:
       yargs: 17.7.2
     optionalDependencies:
       better-sqlite3: 12.5.0
+      mysql2: 3.15.3
       pg: 8.16.3
       ts-node: 10.9.2(@types/node@25.0.1)(typescript@5.9.3)
-      typeorm-aurora-data-api-driver: 3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))
+      typeorm-aurora-data-api-driver: 3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
 
-  typeorm@0.3.28(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))):
+  typeorm@0.3.28(mysql2@3.15.3)(pg@8.16.3)(ts-node@10.9.2(@types/node@25.0.1)(typescript@5.9.3))(typeorm-aurora-data-api-driver@3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))):
     dependencies:
       '@sqltools/formatter': 1.2.5
       ansis: 4.2.0
@@ -19511,9 +19631,10 @@ snapshots:
       uuid: 11.1.0
       yargs: 17.7.2
     optionalDependencies:
+      mysql2: 3.15.3
       pg: 8.16.3
       ts-node: 10.9.2(@types/node@25.0.1)(typescript@5.9.3)
-      typeorm-aurora-data-api-driver: 3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1))
+      typeorm-aurora-data-api-driver: 3.0.2(@aws-sdk/client-rds-data@3.948.0(aws-crt@1.28.1(bufferutil@4.0.9)))
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
