@@ -38,6 +38,9 @@ jobs:
       - name: Build packages
         run: pnpm -r --filter './packages/*' build
 
+      - name: Generate Prisma client
+        run: cd apps/backend && npx prisma generate
+
       - name: Start docker-compose services
         run: |
           docker compose up -d
