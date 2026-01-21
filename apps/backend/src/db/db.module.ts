@@ -1,8 +1,8 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from '@qckstrt/relationaldb-provider';
 
 import configuration from 'src/config';
-import { PrismaModule } from './prisma.module';
 
 /**
  * Database Module

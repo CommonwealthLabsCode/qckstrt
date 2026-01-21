@@ -12,9 +12,9 @@ import {
   NotificationPreference as PrismaNotificationPreference,
   UserConsent as PrismaUserConsent,
   Prisma,
-} from '@prisma/client';
+} from '@qckstrt/relationaldb-provider';
 
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { IFileConfig } from 'src/config';
 import { ConsentType, ConsentStatus } from 'src/common/enums/consent.enum';
 

@@ -8,7 +8,7 @@ import {
   ID,
   Int,
 } from '@nestjs/graphql';
-import { EmailType as PrismaEmailType } from '@prisma/client';
+import { EmailType as PrismaEmailType } from '@qckstrt/relationaldb-provider';
 import { AuthGuard } from 'src/common/guards/auth.guard';
 import {
   GqlContext,

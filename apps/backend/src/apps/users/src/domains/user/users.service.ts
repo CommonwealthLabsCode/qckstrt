@@ -2,7 +2,7 @@ import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { User } from './models/user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import evaluatePrismaError from 'src/db/db.prisma-errors';
 import { AuthService } from '../auth/auth.service';
 import { UpdateUserDto } from './dto/update-user.dto';

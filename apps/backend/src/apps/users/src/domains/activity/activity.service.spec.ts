@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { PrismaService } from 'src/db/prisma.service';
-import { createMockPrismaService } from 'src/test/prisma-mock';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
+import { createMockPrismaService } from '@qckstrt/relationaldb-provider/testing';
 import { ActivityService } from './activity.service';
 import { AuditAction } from 'src/common/enums/audit-action.enum';
 

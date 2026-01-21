@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DatabaseHealthIndicator } from './database.health';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import {
   createMockPrismaService,
   MockPrismaService,
-} from 'src/test/prisma-mock';
+} from '@qckstrt/relationaldb-provider/testing';
 
 describe('DatabaseHealthIndicator', () => {
   let indicator: DatabaseHealthIndicator;

@@ -1,5 +1,5 @@
 import { Directive, Field, ID, ObjectType } from '@nestjs/graphql';
-import { User as PrismaUser } from '@prisma/client';
+import { User as PrismaUser } from '@qckstrt/relationaldb-provider';
 
 import { IUser } from 'src/interfaces/user.interface';
 

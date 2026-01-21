@@ -6,8 +6,8 @@ import type {
   AuthenticationResponseJSON,
 } from '@simplewebauthn/server';
 
-import { PrismaService } from 'src/db/prisma.service';
-import { createMockPrismaService } from 'src/test/prisma-mock';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
+import { createMockPrismaService } from '@qckstrt/relationaldb-provider/testing';
 import { PasskeyService } from './passkey.service';
 
 // Mock @simplewebauthn/server

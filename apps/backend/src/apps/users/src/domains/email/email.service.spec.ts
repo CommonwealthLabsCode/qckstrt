@@ -8,11 +8,11 @@ import {
   EmailStatus as PrismaEmailStatus,
   ConsentType as PrismaConsentType,
   ConsentStatus as PrismaConsentStatus,
-} from '@prisma/client';
+} from '@qckstrt/relationaldb-provider';
 
 import { EmailService } from './email.service';
-import { PrismaService } from 'src/db/prisma.service';
-import { createMockPrismaService } from 'src/test/prisma-mock';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
+import { createMockPrismaService } from '@qckstrt/relationaldb-provider/testing';
 
 describe('EmailService', () => {
   let service: EmailService;

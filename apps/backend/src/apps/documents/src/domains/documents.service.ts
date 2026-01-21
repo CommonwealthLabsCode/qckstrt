@@ -1,10 +1,10 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { IStorageProvider } from '@qckstrt/storage-provider';
-import { Document as PrismaDocument } from '@prisma/client';
+import { Document as PrismaDocument } from '@qckstrt/relationaldb-provider';
 
 import { IFileConfig } from 'src/config';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { DocumentStatus } from 'src/common/enums/document.status.enum';
 import { File } from './models/file.model';
 

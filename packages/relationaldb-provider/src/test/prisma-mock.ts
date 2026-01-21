@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { mockDeep, DeepMockProxy, mockReset } from 'jest-mock-extended';
+import { PrismaClient } from "@prisma/client";
+import { mockDeep, DeepMockProxy, mockReset } from "jest-mock-extended";
 
 /**
  * Type for deeply mocked PrismaClient

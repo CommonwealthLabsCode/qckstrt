@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import {
   AuditLog as PrismaAuditLog,
   UserSession as PrismaUserSession,
-} from '@prisma/client';
+} from '@qckstrt/relationaldb-provider';
 
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { AuditAction } from 'src/common/enums/audit-action.enum';
 
 import {

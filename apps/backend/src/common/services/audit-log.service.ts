@@ -6,7 +6,7 @@ import {
   OnModuleInit,
   Optional,
 } from '@nestjs/common';
-import { PrismaService } from '../../db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { IAuditLogCreate } from '../interfaces/audit.interface';
 import { maskSensitiveData } from '../utils/pii-masker';
 import { ILogger, LOGGER } from '@qckstrt/logging-provider';

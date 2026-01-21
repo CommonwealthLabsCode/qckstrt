@@ -2,8 +2,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { RegionDomainService } from './region.service';
-import { PrismaService } from 'src/db/prisma.service';
-import { createMockPrismaService } from 'src/test/prisma-mock';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
+import { createMockPrismaService } from '@qckstrt/relationaldb-provider/testing';
 import {
   RegionService as RegionProviderService,
   CivicDataType,

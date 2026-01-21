@@ -12,9 +12,9 @@ import {
   EmailStatus as PrismaEmailStatus,
   ConsentType as PrismaConsentType,
   ConsentStatus as PrismaConsentStatus,
-} from '@prisma/client';
+} from '@qckstrt/relationaldb-provider';
 
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { ContactRepresentativeDto } from './dto/contact-representative.dto';
 
 interface RepresentativeInfo {

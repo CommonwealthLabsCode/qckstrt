@@ -4,8 +4,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigService } from '@nestjs/config';
 
 import { DocumentsService } from './documents.service';
-import { PrismaService } from 'src/db/prisma.service';
-import { createMockPrismaService } from 'src/test/prisma-mock';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
+import { createMockPrismaService } from '@qckstrt/relationaldb-provider/testing';
 import { IStorageProvider } from '@qckstrt/storage-provider';
 import { DocumentStatus } from 'src/common/enums/document.status.enum';
 

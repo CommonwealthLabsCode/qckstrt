@@ -20,9 +20,9 @@ import {
   PasskeyCredential as PrismaPasskeyCredential,
   WebAuthnChallenge as PrismaWebAuthnChallenge,
   User as PrismaUser,
-} from '@prisma/client';
+} from '@qckstrt/relationaldb-provider';
 
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { isProduction } from 'src/config/environment.config';
 
 @Injectable()

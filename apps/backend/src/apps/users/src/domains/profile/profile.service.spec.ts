@@ -3,11 +3,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { NotFoundException } from '@nestjs/common';
 
 import { ProfileService } from './profile.service';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import {
   createMockPrismaService,
   MockPrismaService,
-} from 'src/test/prisma-mock';
+} from '@qckstrt/relationaldb-provider/testing';
 import { ConsentType, ConsentStatus } from 'src/common/enums/consent.enum';
 import { AddressType } from 'src/common/enums/address.enum';
 

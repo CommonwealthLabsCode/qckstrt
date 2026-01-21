@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { createMock } from '@golevelup/ts-jest';
-import { Prisma } from '@prisma/client';
+import { Prisma } from '@qckstrt/relationaldb-provider';
 
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { PrismaErrorCodes } from 'src/db/db.prisma-errors';
 import {
   createMockPrismaService,
   MockPrismaService,
-} from 'src/test/prisma-mock';
+} from '@qckstrt/relationaldb-provider/testing';
 
 import { AuthService } from '../auth/auth.service';
 

@@ -4,7 +4,7 @@ import {
   CivicDataType,
   SyncResult,
 } from '@qckstrt/region-provider';
-import { PrismaService } from 'src/db/prisma.service';
+import { PrismaService } from '@qckstrt/relationaldb-provider';
 import { RegionInfoModel, CivicDataTypeGQL } from './models/region-info.model';
 import {
   PaginatedPropositions,
