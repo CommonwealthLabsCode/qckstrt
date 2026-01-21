@@ -50,11 +50,9 @@ export class ProfileService {
     let profile = await this.db.userProfile.findUnique({
       where: { userId },
     });
-    if (!profile) {
-      profile = await this.db.userProfile.create({
-        data: { userId },
-      });
-    }
+    profile ??= await this.db.userProfile.create({
+      data: { userId },
+    });
     return profile;
   }
 
@@ -326,11 +324,9 @@ export class ProfileService {
     let prefs = await this.db.notificationPreference.findUnique({
       where: { userId },
     });
-    if (!prefs) {
-      prefs = await this.db.notificationPreference.create({
-        data: { userId },
-      });
-    }
+    prefs ??= await this.db.notificationPreference.create({
+      data: { userId },
+    });
     return prefs;
   }
 
