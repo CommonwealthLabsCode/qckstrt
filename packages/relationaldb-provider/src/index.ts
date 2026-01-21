@@ -2,25 +2,25 @@
  * Relational Database Provider Package
  *
  * Strategy Pattern + Dependency Injection for relational database connections.
- * Uses Prisma ORM with PostgreSQL (via Supabase).
+ * Provides an abstracted database service for PostgreSQL (via Supabase).
  *
  * @example
  * ```typescript
- * import { PrismaModule, PrismaService } from '@qckstrt/relationaldb-provider';
+ * import { RelationalDbModule, DbService } from '@qckstrt/relationaldb-provider';
  *
  * // In your module
  * @Module({
- *   imports: [PrismaModule],
+ *   imports: [RelationalDbModule],
  * })
  * export class AppModule {}
  *
  * // In your service
  * @Injectable()
  * export class MyService {
- *   constructor(private prisma: PrismaService) {}
+ *   constructor(private db: DbService) {}
  *
  *   async findUser(id: string) {
- *     return this.prisma.user.findUnique({ where: { id } });
+ *     return this.db.user.findUnique({ where: { id } });
  *   }
  * }
  * ```
@@ -39,15 +39,15 @@ export {
   type Environment,
 } from "@qckstrt/common";
 
-// Prisma Service and Module
-export { PrismaService } from "./prisma.service.js";
-export { PrismaModule } from "./prisma.module.js";
+// Database Service and Module
+export { DbService } from "./db.service.js";
+export { RelationalDbModule } from "./db.module.js";
 
 // Re-export Prisma types for convenience
 // This allows consumers to import Prisma types from this package
 export { Prisma, PrismaClient } from "@prisma/client";
 
-// Re-export all generated Prisma model types
+// Re-export all generated model types
 export type {
   User,
   UserProfile,
@@ -66,7 +66,7 @@ export type {
   Meeting,
 } from "@prisma/client";
 
-// Re-export Prisma enums
+// Re-export database enums
 // Note: AuthStrategy is not exported because the User.authStrategy field is a String, not an enum
 export {
   PoliticalAffiliation,

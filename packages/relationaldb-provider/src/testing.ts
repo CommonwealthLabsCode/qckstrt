@@ -8,25 +8,25 @@
  * @example
  * ```typescript
  * import {
- *   createMockPrismaService,
- *   MockPrismaService,
+ *   createMockDbService,
+ *   MockDbService,
  * } from '@qckstrt/relationaldb-provider/testing';
  *
  * describe('MyService', () => {
- *   let prisma: MockPrismaService;
+ *   let db: MockDbService;
  *
  *   beforeEach(() => {
- *     prisma = createMockPrismaService();
+ *     db = createMockDbService();
  *   });
  * });
  * ```
  */
 
 export {
-  createMockPrismaClient,
-  createMockPrismaService,
-  resetMockPrismaClient,
-  resetMockPrismaService,
-  type MockPrismaClient,
-  type MockPrismaService,
-} from "./test/prisma-mock.js";
+  createMockDbClient,
+  createMockDbService,
+  resetMockDbClient,
+  resetMockDbService,
+  type MockDbClient,
+  type MockDbService,
+} from "./test/db-mock.js";

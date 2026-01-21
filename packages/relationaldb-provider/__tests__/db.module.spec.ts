@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { Test, TestingModule } from "@nestjs/testing";
-import { PrismaModule } from "../src/prisma.module";
-import { PrismaService } from "../src/prisma.service";
+import { RelationalDbModule } from "../src/db.module";
+import { DbService } from "../src/db.service";
 
 // Mock @qckstrt/common environment functions
 jest.mock("@qckstrt/common", () => ({
@@ -24,18 +24,18 @@ jest.mock("@prisma/client", () => {
   };
 });
 
-describe("PrismaModule", () => {
+describe("RelationalDbModule", () => {
   let module: TestingModule;
-  let prismaService: PrismaService;
+  let dbService: DbService;
 
   beforeEach(async () => {
     jest.clearAllMocks();
 
     module = await Test.createTestingModule({
-      imports: [PrismaModule],
+      imports: [RelationalDbModule],
     }).compile();
 
-    prismaService = module.get<PrismaService>(PrismaService);
+    dbService = module.get<DbService>(DbService);
   });
 
   afterEach(async () => {
@@ -46,19 +46,19 @@ describe("PrismaModule", () => {
     expect(module).toBeDefined();
   });
 
-  it("should provide PrismaService", () => {
-    expect(prismaService).toBeDefined();
-    expect(prismaService).toBeInstanceOf(PrismaService);
+  it("should provide DbService", () => {
+    expect(dbService).toBeDefined();
+    expect(dbService).toBeInstanceOf(DbService);
   });
 
-  it("should export PrismaService globally", async () => {
-    // Create a child module that imports PrismaModule
+  it("should export DbService globally", async () => {
+    // Create a child module that imports RelationalDbModule
     const childModule = await Test.createTestingModule({
-      imports: [PrismaModule],
+      imports: [RelationalDbModule],
     }).compile();
 
-    const childPrismaService = childModule.get<PrismaService>(PrismaService);
-    expect(childPrismaService).toBeDefined();
+    const childDbService = childModule.get<DbService>(DbService);
+    expect(childDbService).toBeDefined();
 
     await childModule.close();
   });

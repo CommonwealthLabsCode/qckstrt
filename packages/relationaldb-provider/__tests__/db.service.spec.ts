@@ -29,11 +29,11 @@ jest.mock("@qckstrt/common", () => ({
   isTest: jest.fn().mockReturnValue(true),
 }));
 
-// Import PrismaService after mocks are set up
-import { PrismaService } from "../src/prisma.service";
+// Import DbService after mocks are set up
+import { DbService } from "../src/db.service";
 
-describe("PrismaService", () => {
-  let service: PrismaService;
+describe("DbService", () => {
+  let service: DbService;
   let module: TestingModule;
 
   beforeEach(async () => {
@@ -41,10 +41,10 @@ describe("PrismaService", () => {
     mockQueryRaw.mockResolvedValue([{ "?column?": 1 }]);
 
     module = await Test.createTestingModule({
-      providers: [PrismaService],
+      providers: [DbService],
     }).compile();
 
-    service = module.get<PrismaService>(PrismaService);
+    service = module.get<DbService>(DbService);
   });
 
   afterEach(async () => {

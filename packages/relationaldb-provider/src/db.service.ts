@@ -13,18 +13,18 @@ import {
 } from "@qckstrt/common";
 
 /**
- * PrismaService extends PrismaClient to provide NestJS lifecycle hooks
+ * DbService extends PrismaClient to provide NestJS lifecycle hooks
  * for proper connection management.
  *
  * This service implements the IRelationalDBProvider interface, allowing
  * it to be used as a pluggable database provider.
  */
 @Injectable()
-export class PrismaService
+export class DbService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy, IRelationalDBProvider
 {
-  private readonly logger = new Logger(PrismaService.name);
+  private readonly logger = new Logger(DbService.name);
 
   constructor() {
     super({
@@ -74,12 +74,12 @@ export class PrismaService
 
   async connect(): Promise<void> {
     await this.$connect();
-    this.logger.log("Prisma connected to database");
+    this.logger.log("Connected to database");
   }
 
   async disconnect(): Promise<void> {
     await this.$disconnect();
-    this.logger.log("Prisma disconnected from database");
+    this.logger.log("Disconnected from database");
   }
 
   // ============================================

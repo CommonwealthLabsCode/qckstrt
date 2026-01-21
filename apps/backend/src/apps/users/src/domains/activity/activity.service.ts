@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import {
-  AuditLog as PrismaAuditLog,
-  UserSession as PrismaUserSession,
+  AuditLog as DbAuditLog,
+  UserSession as DbUserSession,
 } from '@qckstrt/relationaldb-provider';
 
-import { PrismaService } from '@qckstrt/relationaldb-provider';
+import { DbService } from '@qckstrt/relationaldb-provider';
 import { AuditAction } from 'src/common/enums/audit-action.enum';
 
 import {
@@ -18,7 +18,7 @@ import {
 
 @Injectable()
 export class ActivityService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly db: DbService) {}
 
   /**
    * Get paginated activity log for a user
@@ -54,13 +54,13 @@ export class ActivityService {
     }
 
     const [logs, total] = await Promise.all([
-      this.prisma.auditLog.findMany({
+      this.db.auditLog.findMany({
         where,
         orderBy: { timestamp: 'desc' },
         take: limit,
         skip: offset,
       }),
-      this.prisma.auditLog.count({ where }),
+      this.db.auditLog.count({ where }),
     ]);
 
     const items: ActivityLogEntry[] = logs.map((log) =>
@@ -90,11 +90,11 @@ export class ActivityService {
     }
 
     const [sessions, total] = await Promise.all([
-      this.prisma.userSession.findMany({
+      this.db.userSession.findMany({
         where,
         orderBy: [{ lastActivityAt: 'desc' }, { createdAt: 'desc' }],
       }),
-      this.prisma.userSession.count({ where }),
+      this.db.userSession.count({ where }),
     ]);
 
     const items: SessionInfo[] = sessions.map((session) =>
@@ -112,7 +112,7 @@ export class ActivityService {
     sessionId: string,
     currentSessionToken?: string,
   ): Promise<SessionInfo | null> {
-    const session = await this.prisma.userSession.findFirst({
+    const session = await this.db.userSession.findFirst({
       where: { id: sessionId, userId },
     });
 
@@ -131,7 +131,7 @@ export class ActivityService {
     sessionId: string,
     reason: string = 'user_logout',
   ): Promise<boolean> {
-    const result = await this.prisma.userSession.updateMany({
+    const result = await this.db.userSession.updateMany({
       where: { id: sessionId, userId },
       data: {
         isActive: false,
@@ -151,14 +151,14 @@ export class ActivityService {
     exceptSessionToken?: string,
     reason: string = 'user_logout_all',
   ): Promise<number> {
-    const sessions = await this.prisma.userSession.findMany({
+    const sessions = await this.db.userSession.findMany({
       where: { userId, isActive: true },
     });
 
     let revokedCount = 0;
     for (const session of sessions) {
       if (session.sessionToken !== exceptSessionToken) {
-        await this.prisma.userSession.update({
+        await this.db.userSession.update({
           where: { id: session.id },
           data: {
             isActive: false,
@@ -180,20 +180,20 @@ export class ActivityService {
     // Get action counts
     const [totalActions, successfulActions, failedActions, activeSessions] =
       await Promise.all([
-        this.prisma.auditLog.count({ where: { userId } }),
-        this.prisma.auditLog.count({ where: { userId, success: true } }),
-        this.prisma.auditLog.count({ where: { userId, success: false } }),
-        this.prisma.userSession.count({ where: { userId, isActive: true } }),
+        this.db.auditLog.count({ where: { userId } }),
+        this.db.auditLog.count({ where: { userId, success: true } }),
+        this.db.auditLog.count({ where: { userId, success: false } }),
+        this.db.userSession.count({ where: { userId, isActive: true } }),
       ]);
 
     // Get last login
-    const lastLogin = await this.prisma.auditLog.findFirst({
+    const lastLogin = await this.db.auditLog.findFirst({
       where: { userId, action: AuditAction.LOGIN },
       orderBy: { timestamp: 'desc' },
     });
 
     // Get last activity
-    const lastActivity = await this.prisma.auditLog.findFirst({
+    const lastActivity = await this.db.auditLog.findFirst({
       where: { userId },
       orderBy: { timestamp: 'desc' },
     });
@@ -240,7 +240,7 @@ export class ActivityService {
     return { deviceType, browser };
   }
 
-  private mapAuditLogToEntry(log: PrismaAuditLog): ActivityLogEntry {
+  private mapAuditLogToEntry(log: DbAuditLog): ActivityLogEntry {
     const { deviceType, browser } = this.parseUserAgent(log.userAgent);
 
     return {
@@ -261,7 +261,7 @@ export class ActivityService {
   }
 
   private mapSessionToInfo(
-    session: PrismaUserSession,
+    session: DbUserSession,
     currentSessionToken?: string,
   ): SessionInfo {
     return {
