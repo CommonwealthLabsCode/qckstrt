@@ -1,22 +1,54 @@
 import { execSync } from 'node:child_process';
+import { config } from 'dotenv';
+import { resolve } from 'node:path';
+
+// Load environment variables from .env file (only needed when running from host)
+config({ path: resolve(__dirname, '../../.env') });
 
 interface ServiceConfig {
   name: string;
-  port: number;
+  url: string;
   required: boolean;
 }
 
-const SERVICES: ServiceConfig[] = [
-  { name: 'users', port: 3001, required: true },
-  { name: 'documents', port: 3002, required: true },
-  { name: 'knowledge', port: 3003, required: true },
-  { name: 'region', port: 3004, required: true },
-  { name: 'api', port: 3000, required: false }, // API Gateway is optional for some tests
-];
+/**
+ * Get service URLs from environment variables or fall back to localhost defaults.
+ * When running in Docker, env vars point to container names (e.g., http://users:8080).
+ * When running from host, they default to localhost with mapped ports.
+ */
+function getServiceConfigs(): ServiceConfig[] {
+  return [
+    {
+      name: 'users',
+      url: process.env.USERS_SERVICE_URL || 'http://localhost:3001',
+      required: true,
+    },
+    {
+      name: 'documents',
+      url: process.env.DOCUMENTS_SERVICE_URL || 'http://localhost:3002',
+      required: true,
+    },
+    {
+      name: 'knowledge',
+      url: process.env.KNOWLEDGE_SERVICE_URL || 'http://localhost:3003',
+      required: true,
+    },
+    {
+      name: 'region',
+      url: process.env.REGION_SERVICE_URL || 'http://localhost:3004',
+      required: true,
+    },
+    {
+      name: 'api',
+      url: process.env.API_GATEWAY_URL || 'http://localhost:3000',
+      required: true, // API Gateway is now required for all tests
+    },
+  ];
+}
 
 async function checkService(service: ServiceConfig): Promise<boolean> {
   try {
-    const response = await fetch(`http://localhost:${service.port}/health`);
+    const response = await fetch(`${service.url}/health`);
     return response.ok;
   } catch {
     return false;
@@ -24,16 +56,23 @@ async function checkService(service: ServiceConfig): Promise<boolean> {
 }
 
 export default async function globalSetup() {
-  // Verify docker-compose services are running
-  try {
-    execSync('docker compose ps --status running | grep supabase-db', {
-      stdio: 'pipe',
-    });
-  } catch {
-    throw new Error(
-      'Integration tests require docker-compose services.\n' +
-        'Run: docker compose up -d',
-    );
+  const services = getServiceConfigs();
+
+  // When running inside Docker, skip docker compose check
+  const isRunningInDocker = process.env.API_GATEWAY_URL?.includes('://api:');
+
+  if (!isRunningInDocker) {
+    // Verify docker-compose services are running (only when running from host)
+    try {
+      execSync('docker compose ps --status running | grep supabase-db', {
+        stdio: 'pipe',
+      });
+    } catch {
+      throw new Error(
+        'Integration tests require docker-compose services.\n' +
+          'Run: docker compose up -d',
+      );
+    }
   }
 
   console.log('✓ Docker services running');
@@ -41,11 +80,11 @@ export default async function globalSetup() {
   // Verify backend services are running
   const maxWait = 60000; // 60 seconds
   const startTime = Date.now();
-  const requiredServices = SERVICES.filter((s) => s.required);
+  const requiredServices = services.filter((s: ServiceConfig) => s.required);
 
   while (Date.now() - startTime < maxWait) {
     const serviceStatuses = await Promise.all(
-      requiredServices.map(async (service) => ({
+      requiredServices.map(async (service: ServiceConfig) => ({
         ...service,
         ready: await checkService(service),
       })),
@@ -55,19 +94,7 @@ export default async function globalSetup() {
 
     if (allReady) {
       for (const service of serviceStatuses) {
-        console.log(`✓ ${service.name} service ready (port ${service.port})`);
-      }
-
-      // Check optional services for informational purposes
-      for (const service of SERVICES.filter((s) => !s.required)) {
-        const ready = await checkService(service);
-        if (ready) {
-          console.log(`✓ ${service.name} service ready (port ${service.port})`);
-        } else {
-          console.log(
-            `○ ${service.name} service not running (port ${service.port}) - optional`,
-          );
-        }
+        console.log(`✓ ${service.name} service ready (${service.url})`);
       }
 
       return;
@@ -88,25 +115,20 @@ export default async function globalSetup() {
 
   // Timeout - show which services are missing
   const finalStatuses = await Promise.all(
-    requiredServices.map(async (service) => ({
+    requiredServices.map(async (service: ServiceConfig) => ({
       ...service,
       ready: await checkService(service),
     })),
   );
 
   const missing = finalStatuses.filter((s) => !s.ready);
-  const missingList = missing
-    .map((s) => `  - ${s.name} (port ${s.port})`)
-    .join('\n');
+  const missingList = missing.map((s) => `  - ${s.name} (${s.url})`).join('\n');
 
   throw new Error(
     `Backend services not running. Missing services:\n${missingList}\n\n` +
       'To start all services:\n' +
-      '  cd apps/backend && pnpm start\n\n' +
-      'Or start individual services:\n' +
-      '  pnpm start:users    # port 3001\n' +
-      '  pnpm start:documents # port 3002\n' +
-      '  pnpm start:knowledge # port 3003\n' +
-      '  pnpm start:region    # port 3004',
+      '  docker compose -f docker-compose-integration.yml up -d\n\n' +
+      'Or run tests in Docker:\n' +
+      '  docker compose -f docker-compose-integration.yml --profile test run test-runner',
   );
 }

@@ -175,3 +175,31 @@ services:
     networks:
       - qckstrt-network
     restart: unless-stopped
+
+  # Test runner container - runs integration tests inside Docker
+  # Builds its own node_modules to ensure correct platform bindings
+  test-runner:
+    build:
+      context: .
+      dockerfile: apps/backend/docker/Dockerfile.test-runner
+    container_name: qckstrt-test-runner
+    environment:
+      <<: *backend-env
+      # Override URLs to use container networking
+      DATABASE_URL: postgresql://postgres:your-super-secret-password@supabase-db:5432/postgres
+      SUPABASE_URL: http://supabase-kong:8000
+      INBUCKET_URL: http://inbucket:9000
+      # API Gateway URL for tests (container name, not localhost)
+      API_GATEWAY_URL: http://api:8080
+      # Direct service URLs (container names)
+      USERS_SERVICE_URL: http://users:8080
+      DOCUMENTS_SERVICE_URL: http://documents:8080
+      KNOWLEDGE_SERVICE_URL: http://knowledge:8080
+      REGION_SERVICE_URL: http://region:8080
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - qckstrt-network
+    profiles:
+      - test
