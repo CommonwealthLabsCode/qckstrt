@@ -49,8 +49,9 @@ services:
     volumes:
       - supabase-db-data:/var/lib/postgresql/data
       # Custom init script to ensure Supabase users have passwords set
-      # Must be mounted as a file, not directory, and run after default scripts (99- prefix)
-      - ./supabase/init/99-set-passwords.sh:/docker-entrypoint-initdb.d/99-set-passwords.sh:ro
+      # Required because supabase/postgres creates roles without passwords
+      # Mirrors official Supabase docker setup's roles.sql
+      - ./supabase/init/99-set-passwords.sql:/docker-entrypoint-initdb.d/99-set-passwords.sql:ro
     networks:
       - qckstrt-network
     healthcheck:
