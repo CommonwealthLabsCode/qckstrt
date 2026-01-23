@@ -48,10 +48,10 @@ services:
       JWT_EXP: ${JWT_EXP:-3600}
     volumes:
       - supabase-db-data:/var/lib/postgresql/data
-      # Custom init script to ensure Supabase users have passwords set
-      # Required because supabase/postgres creates roles without passwords
-      # Mirrors official Supabase docker setup's roles.sql
-      - ./supabase/init/99-set-passwords.sql:/docker-entrypoint-initdb.d/99-set-passwords.sql:ro
+      # Custom init script to set passwords on Supabase roles
+      # Mounted in zz-custom/ directory so it runs AFTER the supabase/postgres
+      # image's init-scripts/ directory (z > i alphabetically)
+      - ./supabase/init/99-set-passwords.sql:/docker-entrypoint-initdb.d/zz-custom/99-set-passwords.sql:ro
     networks:
       - qckstrt-network
     healthcheck:
