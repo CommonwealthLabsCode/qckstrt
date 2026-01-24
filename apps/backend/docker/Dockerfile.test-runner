@@ -34,6 +34,5 @@ RUN pnpm --filter "./packages/*" build
 # Set working directory for tests
 WORKDIR /usr/src/app/apps/backend
 
-# Run migrations and then integration tests
-# db:push syncs the Prisma schema to the database
-CMD ["sh", "-c", "pnpm --filter @qckstrt/relationaldb-provider db:push && pnpm test:integration"]
+# Run integration tests (db:push handled by db-migrate service)
+CMD ["pnpm", "test:integration"]
