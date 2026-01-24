@@ -49,9 +49,9 @@ services:
     volumes:
       - supabase-db-data:/var/lib/postgresql/data
       # Custom init script to set passwords on Supabase roles
-      # Mounted in zz-custom/ directory so it runs AFTER the supabase/postgres
-      # image's init-scripts/ directory (z > i alphabetically)
-      - ./supabase/init/99-set-passwords.sql:/docker-entrypoint-initdb.d/zz-custom/99-set-passwords.sql:ro
+      # Named zz-* to run AFTER migrate.sh (z > m alphabetically)
+      # postgres entrypoint ignores directories, so must mount as a file
+      - ./supabase/init/99-set-passwords.sql:/docker-entrypoint-initdb.d/zz-set-passwords.sql:ro
     networks:
       - qckstrt-network
     healthcheck:
