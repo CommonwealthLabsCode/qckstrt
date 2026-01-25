@@ -1,6 +1,11 @@
-export const BASE_URL = 'http://localhost:3001';
-export const SUPABASE_URL = 'http://localhost:8000';
-export const INBUCKET_URL = 'http://localhost:54324';
+// URLs for integration testing
+// When running in Docker, these use container names.
+// When running from host, these use localhost with mapped ports.
+export const BASE_URL =
+  process.env.USERS_SERVICE_URL || 'http://localhost:3001';
+export const SUPABASE_URL = process.env.SUPABASE_URL || 'http://localhost:8000';
+export const INBUCKET_URL =
+  process.env.INBUCKET_URL || 'http://localhost:54324';
 
 /**
  * Fetches the magic link from Inbucket email service.
