@@ -8,6 +8,9 @@ import type {
   Representative,
   Proposition,
   Meeting,
+  AuditLog,
+  UserSession,
+  UserLogin,
   ConsentType,
   ConsentStatus,
   DocumentStatus,
@@ -349,6 +352,138 @@ export async function createMeeting(
       agendaUrl: options.agendaUrl,
       videoUrl: options.videoUrl,
       externalId: options.externalId ?? `meeting-${id}`,
+    },
+  });
+}
+
+// ============================================
+// Activity/Audit Fixtures
+// ============================================
+
+export interface CreateAuditLogOptions {
+  id?: string;
+  userId?: string;
+  userEmail?: string;
+  action?: string;
+  entityType?: string;
+  entityId?: string;
+  operationName?: string;
+  operationType?: string;
+  success?: boolean;
+  errorMessage?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  serviceName?: string;
+  timestamp?: Date;
+}
+
+/**
+ * Creates an audit log record.
+ * Matches the actual Prisma AuditLog model schema.
+ */
+export async function createAuditLog(
+  options: CreateAuditLogOptions = {},
+): Promise<AuditLog> {
+  const db = await getDbService();
+  return db.auditLog.create({
+    data: {
+      id: options.id ?? generateId(),
+      userId: options.userId,
+      userEmail: options.userEmail,
+      action: options.action ?? 'READ',
+      entityType: options.entityType,
+      entityId: options.entityId,
+      operationName: options.operationName,
+      operationType: options.operationType ?? 'query',
+      success: options.success ?? true,
+      errorMessage: options.errorMessage,
+      ipAddress: options.ipAddress ?? '127.0.0.1',
+      userAgent: options.userAgent ?? 'test-agent',
+      serviceName: options.serviceName ?? 'test-service',
+      requestId: generateId(),
+      timestamp: options.timestamp ?? new Date(),
+    },
+  });
+}
+
+export interface CreateUserSessionOptions {
+  id?: string;
+  userId: string;
+  sessionToken?: string;
+  refreshToken?: string;
+  deviceType?: string;
+  deviceName?: string;
+  browser?: string;
+  operatingSystem?: string;
+  ipAddress?: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  isActive?: boolean;
+  lastActivityAt?: Date;
+  expiresAt?: Date;
+  revokedAt?: Date;
+  revokedReason?: string;
+}
+
+/**
+ * Creates a user session record.
+ * Matches the actual Prisma UserSession model schema.
+ */
+export async function createUserSession(
+  options: CreateUserSessionOptions,
+): Promise<UserSession> {
+  const db = await getDbService();
+  const id = options.id ?? generateId();
+  const now = new Date();
+  return db.userSession.create({
+    data: {
+      id,
+      userId: options.userId,
+      sessionToken: options.sessionToken ?? `session-${id}`,
+      refreshToken: options.refreshToken,
+      deviceType: options.deviceType ?? 'desktop',
+      deviceName: options.deviceName,
+      browser: options.browser ?? 'Chrome',
+      operatingSystem: options.operatingSystem ?? 'macOS',
+      ipAddress: options.ipAddress ?? '127.0.0.1',
+      city: options.city,
+      region: options.region,
+      country: options.country,
+      isActive: options.isActive ?? true,
+      lastActivityAt: options.lastActivityAt ?? now,
+      expiresAt: options.expiresAt ?? new Date(now.getTime() + 86400000), // 24 hours
+      revokedAt: options.revokedAt,
+      revokedReason: options.revokedReason,
+    },
+  });
+}
+
+export interface CreateUserLoginOptions {
+  userId: string;
+  passwordHash?: string;
+  lastLoginAt?: Date;
+  loginCount?: number;
+  failedLoginAttempts?: number;
+  lockedUntil?: Date;
+}
+
+/**
+ * Creates a user login record.
+ * Matches the actual Prisma UserLogin model schema.
+ */
+export async function createUserLogin(
+  options: CreateUserLoginOptions,
+): Promise<UserLogin> {
+  const db = await getDbService();
+  return db.userLogin.create({
+    data: {
+      userId: options.userId,
+      passwordHash: options.passwordHash,
+      lastLoginAt: options.lastLoginAt,
+      loginCount: options.loginCount ?? 0,
+      failedLoginAttempts: options.failedLoginAttempts ?? 0,
+      lockedUntil: options.lockedUntil,
     },
   });
 }
