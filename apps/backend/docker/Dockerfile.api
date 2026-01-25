@@ -27,6 +27,9 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 # Generate database client from provider package
 RUN pnpm --filter @qckstrt/relationaldb-provider db:generate
 
+# Build all workspace packages (required before backend can compile)
+RUN pnpm --filter "./packages/*" build
+
 # Build the service
 WORKDIR /usr/src/app/apps/backend
 RUN pnpm build:api
