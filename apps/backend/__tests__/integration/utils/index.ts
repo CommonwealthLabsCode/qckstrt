@@ -69,6 +69,13 @@ export {
   type CreatePropositionOptions,
   createMeeting,
   type CreateMeetingOptions,
+  // Activity/Audit fixtures
+  createAuditLog,
+  type CreateAuditLogOptions,
+  createUserSession,
+  type CreateUserSessionOptions,
+  createUserLogin,
+  type CreateUserLoginOptions,
   // Composite fixtures
   createUserWithProfile,
   type CreateUserWithProfileOptions,
