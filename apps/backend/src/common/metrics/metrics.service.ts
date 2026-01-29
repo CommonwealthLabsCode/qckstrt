@@ -150,8 +150,8 @@ export class MetricsService {
         )
         // Replace numeric IDs
         .replace(/\/\d+/g, '/:id')
-        // Replace query strings
-        .replace(/\?.*$/, '')
+        // Replace query strings (use [^\n]* instead of .* to avoid ReDoS)
+        .replace(/\?[^\n]*$/, '')
     );
   }
 }
