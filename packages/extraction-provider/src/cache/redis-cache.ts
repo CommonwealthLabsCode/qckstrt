@@ -39,6 +39,7 @@ export class RedisCache<T = string> implements ICache<T> {
   private readonly ttlMs: number;
   private readonly keyPrefix: string;
   private isConnected: boolean = false;
+  private lastError?: unknown;
 
   constructor(options: RedisCacheOptions = {}) {
     this.ttlMs = options.ttlMs ?? 300000; // 5 minutes default
@@ -108,7 +109,8 @@ export class RedisCache<T = string> implements ICache<T> {
       const data = await this.redis.get(this.getKey(key));
       if (!data) return undefined;
       return JSON.parse(data) as T;
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fail-open: cache is best-effort
       return undefined;
     }
   }
@@ -125,8 +127,8 @@ export class RedisCache<T = string> implements ICache<T> {
         ttlSeconds,
         JSON.stringify(value),
       );
-    } catch {
-      // Silently fail - cache is best effort
+    } catch (error) {
+      this.lastError = error; // Fail-open: cache is best-effort
     }
   }
 
@@ -138,7 +140,8 @@ export class RedisCache<T = string> implements ICache<T> {
       await this.ensureConnected();
       const exists = await this.redis.exists(this.getKey(key));
       return exists === 1;
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fail-open: cache is best-effort
       return false;
     }
   }
@@ -151,7 +154,8 @@ export class RedisCache<T = string> implements ICache<T> {
       await this.ensureConnected();
       const deleted = await this.redis.del(this.getKey(key));
       return deleted === 1;
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fail-open: cache is best-effort
       return false;
     }
   }
@@ -166,8 +170,8 @@ export class RedisCache<T = string> implements ICache<T> {
       if (keys.length > 0) {
         await this.redis.del(...keys);
       }
-    } catch {
-      // Silently fail
+    } catch (error) {
+      this.lastError = error; // Fail-open: cache is best-effort
     }
   }
 
@@ -180,7 +184,8 @@ export class RedisCache<T = string> implements ICache<T> {
         await this.ensureConnected();
         const keys = await this.redis.keys(`${this.keyPrefix}*`);
         return keys.length;
-      } catch {
+      } catch (error) {
+        this.lastError = error; // Fail-open: cache is best-effort
         return 0;
       }
     })();
@@ -194,7 +199,8 @@ export class RedisCache<T = string> implements ICache<T> {
       await this.ensureConnected();
       const keys = await this.redis.keys(`${this.keyPrefix}*`);
       return keys.map((k) => k.slice(this.keyPrefix.length));
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fail-open: cache is best-effort
       return [];
     }
   }
@@ -205,7 +211,8 @@ export class RedisCache<T = string> implements ICache<T> {
   async destroy(): Promise<void> {
     try {
       await this.redis.quit();
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fallback to disconnect on quit failure
       this.redis.disconnect();
     }
     this.isConnected = false;
@@ -226,8 +233,16 @@ export class RedisCache<T = string> implements ICache<T> {
       await this.ensureConnected();
       const result = await this.redis.ping();
       return result === "PONG";
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fail-open: return false on connection error
       return false;
     }
+  }
+
+  /**
+   * Get the last error that occurred (useful for debugging)
+   */
+  getLastError(): unknown {
+    return this.lastError;
   }
 }

@@ -73,6 +73,7 @@ export class RedisRateLimiter implements IRateLimiter {
   private readonly burstSize: number;
   private readonly key: string;
   private isConnected: boolean = false;
+  private lastError?: unknown;
 
   constructor(options: RedisRateLimiterOptions = {}) {
     this.requestsPerSecond = options.requestsPerSecond ?? 2;
@@ -154,8 +155,8 @@ export class RedisRateLimiter implements IRateLimiter {
         // After waiting, try again (token should be available now)
         await this.acquire();
       }
-    } catch {
-      // On Redis error, allow the request (fail open)
+    } catch (error) {
+      this.lastError = error; // Fail-open: allow request on Redis error
       return;
     }
   }
@@ -178,8 +179,8 @@ export class RedisRateLimiter implements IRateLimiter {
       );
 
       return result[1] === 0;
-    } catch {
-      // On Redis error, allow the request (fail open)
+    } catch (error) {
+      this.lastError = error; // Fail-open: allow request on Redis error
       return true;
     }
   }
@@ -209,7 +210,8 @@ export class RedisRateLimiter implements IRateLimiter {
 
       const tokensNeeded = 1 - tokens;
       return Math.ceil((tokensNeeded * 1000) / this.requestsPerSecond);
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fail-open: return 0 wait time on error
       return 0;
     }
   }
@@ -228,8 +230,9 @@ export class RedisRateLimiter implements IRateLimiter {
       const elapsed = Date.now() - lastRefill;
       const tokensToAdd = (elapsed * this.requestsPerSecond) / 1000;
       return Math.min(this.burstSize, tokens + tokensToAdd);
-    } catch {
-      return this.burstSize; // Assume full on error
+    } catch (error) {
+      this.lastError = error; // Fail-open: assume full tokens on error
+      return this.burstSize;
     }
   }
 
@@ -240,8 +243,8 @@ export class RedisRateLimiter implements IRateLimiter {
     try {
       await this.ensureConnected();
       await this.redis.del(this.key);
-    } catch {
-      // Silently fail
+    } catch (error) {
+      this.lastError = error; // Fail-open: ignore reset errors
     }
   }
 
@@ -251,10 +254,18 @@ export class RedisRateLimiter implements IRateLimiter {
   async destroy(): Promise<void> {
     try {
       await this.redis.quit();
-    } catch {
+    } catch (error) {
+      this.lastError = error; // Fallback to disconnect on quit failure
       this.redis.disconnect();
     }
     this.isConnected = false;
+  }
+
+  /**
+   * Get the last error that occurred (useful for debugging)
+   */
+  getLastError(): unknown {
+    return this.lastError;
   }
 
   /**
